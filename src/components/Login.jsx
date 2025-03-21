@@ -7,16 +7,14 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { USER_AVATAR } from "../utils/constant";
 
 const Login = () => {
   const [isSignInForm, setisSignInForm] = useState(true);
 
   const [errorMessage, seterrorMessage] = useState(null);
-
-  const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
@@ -52,7 +50,7 @@ const Login = () => {
           const user = userCredential.user;
           return updateProfile(user, {
             displayName: name.current.value,
-            photoURL: "https://avatars.githubusercontent.com/u/144015659?v=4",
+            photoURL: USER_AVATAR,
           });
         })
         .then(() => {
@@ -65,7 +63,6 @@ const Login = () => {
               photoURL: photoURL,
             })
           );
-          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -81,16 +78,6 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-
-          updateProfile(user, {
-            photoURL: "https://avatars.githubusercontent.com/u/144015659?v=4", //TODO - photo update
-          })
-            .then(() => {
-              navigate("/browse");
-            })
-            .catch((error) => {
-              seterrorMessage(error.message);
-            });
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -138,7 +125,7 @@ const Login = () => {
         />
         <p className="text-red-400 font-bold text-lg py-2">{errorMessage}</p>
         <button
-          className="p-4 my-6 bg-red-700 w-full rounded-lg"
+          className="p-4 my-6 bg-red-700 w-full rounded-lg cursor-pointer"
           onClick={handleButtonClick}
         >
           {isSignInForm ? "Sign In" : "Sign Up"}
