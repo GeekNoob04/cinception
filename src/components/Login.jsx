@@ -1,10 +1,24 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { checkValidDAta } from "../utils/Validate";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
+
 const Login = () => {
   const [isSignInForm, setisSignInForm] = useState(true);
 
   const [errorMessage, seterrorMessage] = useState(null);
+
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   const toggleSignInForm = () => {
     setisSignInForm(!isSignInForm);
@@ -25,7 +39,65 @@ const Login = () => {
     );
     seterrorMessage(message);
 
+    if (message) return;
     // Sign In / Sign Up
+    if (!isSignInForm) {
+      // sign up
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          const user = userCredential.user;
+          return updateProfile(user, {
+            displayName: name.current.value,
+            photoURL: "https://avatars.githubusercontent.com/u/144015659?v=4",
+          });
+        })
+        .then(() => {
+          const { uid, email, displayName, photoURL } = auth.currentUser;
+          dispatch(
+            addUser({
+              uid: uid,
+              email: email,
+              displayName: displayName,
+              photoURL: photoURL,
+            })
+          );
+          navigate("/browse");
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          seterrorMessage(errorCode + "-" + errorMessage);
+        });
+    } else {
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+
+          updateProfile(user, {
+            photoURL: "https://avatars.githubusercontent.com/u/144015659?v=4", //TODO - photo update
+          })
+            .then(() => {
+              navigate("/browse");
+            })
+            .catch((error) => {
+              seterrorMessage(error.message);
+            });
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          seterrorMessage(errorCode + "-" + errorMessage);
+        });
+    }
   };
   return (
     <div>
@@ -39,7 +111,7 @@ const Login = () => {
       </div>
       <form
         onSubmit={(e) => e.preventDefault()}
-        className="w-3/12 absolute p-12 bg-black/80 my-36 mx-auto right-0 left-0 text-white rounded-lg bg-opacity-50"
+        className="w-md absolute p-12 bg-black/80 my-36 mx-auto right-0 left-0 text-white rounded-lg bg-opacity-50"
       >
         <h1 className="font-bold text-3xl py-4">
           {isSignInForm ? "Sign In" : "Sign Up"}
