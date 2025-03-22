@@ -27,8 +27,8 @@ const Login = () => {
 
   const handleButtonClick = () => {
     // validate
-    console.log(email.current.value);
-    console.log(password.current.value);
+    // console.log(email.current.value);
+    // console.log(password.current.value);
 
     const message = checkValidDAta(
       isSignInForm ? null : name.current?.value,
