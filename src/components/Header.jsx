@@ -9,11 +9,14 @@ import { useDispatch } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
 import { LOGO } from "../utils/constant";
 import { toggleGptSearchView } from "../utils/gptSlice";
+import { SUPPORTED_LANGUAGES } from "../utils/LangConstants";
+import { changeLang } from "../utils/configSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
+  const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
@@ -50,17 +53,34 @@ const Header = () => {
   const handleGptSearchClick = () => {
     dispatch(toggleGptSearchView());
   };
+  const handleLangChange = (e) => {
+    dispatch(changeLang(e.target.value));
+  };
 
   return (
     <div className="absolute w-full px-10 py-6 bg-gradient-to-b from-black z-10 flex justify-between">
       <img className="w-44" src={LOGO} alt="logo" />
       {user && (
         <div className="flex p-2">
+          {showGptSearch && (
+            <select
+              className="p-2 m-2 bg-gray-800 text-white"
+              onChange={handleLangChange}
+            >
+              {SUPPORTED_LANGUAGES.map((lang) => (
+                <option key={lang.identifier} value={lang.identifier}>
+                  {lang.name}
+                </option>
+              ))}
+            </select>
+          )}
+          {/*lang vala kaam */}
+
           <button
             className="py-2 px-4 mx-4 my-2 bg-purple-700 text-white rounded-lg"
             onClick={handleGptSearchClick}
           >
-            AI SEARCH
+            {showGptSearch ? "Home" : "Ai Search"}
           </button>
           <img className="w-12 h-12" src={user?.photoURL} />
           <button onClick={handleSignOut} className="font-bold text-white">
