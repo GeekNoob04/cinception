@@ -1,30 +1,3 @@
-// import React from "react";
-// import { IMG_CDN_URL } from "../utils/constant";
-
-// const GeminiMovieCard = ({ movie }) => {
-//   if (!movie) return null;
-
-//   return (
-//     <div className="w-36 sm:w-40 md:w-48 lg:w-56 m-2 relative transition-transform duration-300 hover:scale-105 hover:shadow-lg group">
-//       <img
-//         alt={movie.title}
-//         src={
-//           movie.poster_path ? IMG_CDN_URL + movie.poster_path : "/no-poster.png"
-//         }
-//         className="w-full h-auto rounded-lg shadow-md"
-//         loading="lazy"
-//       />
-//       <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white p-2 rounded-b-lg transition-opacity duration-300 opacity-100 group-hover:opacity-100">
-//         <h3 className="text-sm font-medium truncate">{movie.title}</h3>
-//         <p className="text-xs opacity-75 truncate">
-//           {movie.release_date?.split("-")[0]}
-//         </p>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default GeminiMovieCard;
 import React, { useState, useCallback, useMemo } from "react";
 import { IMG_CDN_URL } from "../utils/constant";
 import { createPortal } from "react-dom";
@@ -198,7 +171,10 @@ const GeminiMovieCard = ({ movie }) => {
   const posterPath = movie?.poster_path;
 
   // Early return if no poster
-  if (!posterPath) return null;
+  if (!posterPath) {
+    console.log("No poster path for movie:", movie?.title || "Unknown movie");
+    return null;
+  }
 
   // Memoize event handlers to prevent unnecessary re-renders
   const handleFavoriteToggle = useCallback((e) => {
@@ -222,23 +198,41 @@ const GeminiMovieCard = ({ movie }) => {
   }, []);
 
   return (
-    <>
-      <div className="w-48 pr-4 relative">
+    <div className="relative w-36 md:w-44 lg:w-56 flex-shrink-0 mb-4">
+      <div className="w-full overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
         <img
           src={IMG_CDN_URL + posterPath}
           alt={movie?.title || "Movie Card"}
-          className="w-full cursor-pointer hover:scale-105 transition-transform duration-300"
+          className="w-full h-52 md:h-64 lg:h-80 object-cover cursor-pointer hover:scale-105 transition-transform duration-300"
           onClick={handleShowInfo}
           loading="lazy"
         />
-        <button
-          className="text-white text-3xl absolute top-0 -ml-1 opacity-85 cursor-pointer"
-          onClick={handleFavoriteToggle}
-          aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
-        >
-          {isFavorite ? <BsFillBookmarkCheckFill /> : <BsBookmarkPlusFill />}
-        </button>
+        <div className="p-2 bg-gray-900 bg-opacity-80">
+          <h3 className="text-white text-sm md:text-base font-medium truncate">
+            {movie?.title || movie?.name || "Movie Title"}
+          </h3>
+          {movie?.vote_average && (
+            <div className="flex items-center mt-1">
+              <FaStar className="text-yellow-500 mr-1 text-xs md:text-sm" />
+              <span className="text-white text-xs md:text-sm">
+                {Math.round(movie.vote_average * 10) / 10}
+              </span>
+            </div>
+          )}
+        </div>
       </div>
+
+      <button
+        className="absolute top-2 right-2 bg-black bg-opacity-60 p-1 rounded-full text-white hover:bg-opacity-80 transition-opacity"
+        onClick={handleFavoriteToggle}
+        aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
+      >
+        {isFavorite ? (
+          <BsFillBookmarkCheckFill className="text-lg md:text-xl" />
+        ) : (
+          <BsBookmarkPlusFill className="text-lg md:text-xl" />
+        )}
+      </button>
 
       <MovieModal
         showInfoModal={showInfoModal}
@@ -249,7 +243,7 @@ const GeminiMovieCard = ({ movie }) => {
         isLoading={isLoading}
         posterPath={posterPath}
       />
-    </>
+    </div>
   );
 };
 

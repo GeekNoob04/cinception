@@ -1,111 +1,3 @@
-// import { signOut } from "firebase/auth";
-// import React from "react";
-// import { auth } from "../utils/firebase";
-// import { useNavigate } from "react-router-dom";
-// import { useSelector } from "react-redux";
-// import { useEffect } from "react";
-// import { onAuthStateChanged } from "firebase/auth";
-// import { useDispatch } from "react-redux";
-// import { addUser, removeUser } from "../utils/userSlice";
-// import { LOGO } from "../utils/constant";
-// import { toggleGptSearchView } from "../utils/gptSlice";
-// import { SUPPORTED_LANGUAGES } from "../utils/LangConstants";
-// import { changeLang } from "../utils/configSlice";
-
-// const Header = () => {
-//   const dispatch = useDispatch();
-//   const navigate = useNavigate();
-//   const user = useSelector((store) => store.user);
-//   const showGptSearch = useSelector((store) => store.gemini.showGptSearch);
-
-//   const handleSignOut = () => {
-//     signOut(auth)
-//       .then(() => {
-//         // Sign-out successful.
-//       })
-//       .catch(() => {
-//         // An error happened.
-//         navigate("/error"); // TODO - to build
-//       });
-//   };
-
-//   useEffect(() => {
-//     const unsubscribe = onAuthStateChanged(auth, (user) => {
-//       if (user) {
-//         const { uid, email, displayName, photoURL } = user;
-//         dispatch(
-//           addUser({
-//             uid: uid,
-//             email: email,
-//             displayName: displayName,
-//             photoURL: photoURL,
-//           })
-//         );
-//         navigate("/browse");
-//       } else {
-//         // User is signed out
-//         dispatch(removeUser());
-//         navigate("/");
-//       }
-//     });
-
-//     return () => unsubscribe();
-//   }, []);
-
-//   const handleGptSearchClick = () => {
-//     dispatch(toggleGptSearchView());
-//   };
-
-//   const handleLangChange = (e) => {
-//     dispatch(changeLang(e.target.value));
-//   };
-
-//   return (
-//     <div className="fixed top-0 w-full px-4 md:px-10 py-4 md:py-6 bg-gradient-to-b from-black to-transparent z-50 flex flex-col md:flex-row md:justify-between items-center">
-//       <img className="w-32 md:w-44" src={LOGO} alt="logo" />
-//       {user && (
-//         <div className="flex flex-wrap items-center justify-center mt-4 md:mt-0">
-//           {showGptSearch && (
-//             <select
-//               className="p-2 m-2 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-//               onChange={handleLangChange}
-//             >
-//               {SUPPORTED_LANGUAGES.map((lang) => (
-//                 <option key={lang.identifier} value={lang.identifier}>
-//                   {lang.name}
-//                 </option>
-//               ))}
-//             </select>
-//           )}
-
-//           <button
-//             className="py-2 px-4 mx-2 my-2 bg-purple-700 hover:bg-purple-800 text-white rounded-md transition-colors duration-300 font-medium"
-//             onClick={handleGptSearchClick}
-//           >
-//             {showGptSearch ? "Home" : "AI Search"}
-//           </button>
-
-//           <div className="flex items-center mx-2">
-//             <img
-//               className="w-10 h-10 rounded-full mr-2 border-2 border-white"
-//               src={user?.photoURL}
-//               alt="User avatar"
-//             />
-//             <button
-//               onClick={handleSignOut}
-//               className="font-bold text-white hover:underline"
-//             >
-//               Sign Out
-//             </button>
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default Header;
-
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -146,6 +38,11 @@ const Header = () => {
     dispatch(changeLang(e.target.value));
   };
 
+  // Function to refresh page and navigate to browse
+  const refreshAndNavigate = () => {
+    window.location.href = "/browse";
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -172,13 +69,14 @@ const Header = () => {
   return (
     <div>
       <div className="fixed top-0 w-full z-50 bg-gradient-to-b from-black to-transparent flex justify-between items-center p-4 md:px-10 md:py-6">
-        <Link to="/browse">
+        <div className="w-32 md:w-44 md:ml-4">
           <img
             src={LOGO}
-            className={`w-32 md:w-44 ${!user ? "mx-auto md:ml-4" : ""}`}
+            className="w-full cursor-pointer"
             alt="Logo"
+            onClick={user ? refreshAndNavigate : () => navigate("/")}
           />
-        </Link>
+        </div>
 
         {user && (
           <>
@@ -207,11 +105,12 @@ const Header = () => {
 
               {/* Only show Home button when not in GPT search view */}
               {!showGptSearch && (
-                <Link to="/browse">
-                  <button className="text-white bg-red-600 px-3 py-1 rounded hover:bg-red-700 transition duration-300">
-                    Home
-                  </button>
-                </Link>
+                <button
+                  onClick={refreshAndNavigate}
+                  className="text-white bg-red-600 px-3 py-1 rounded hover:bg-red-700 transition duration-300"
+                >
+                  Home
+                </button>
               )}
 
               <button
@@ -267,11 +166,15 @@ const Header = () => {
 
           {/* Only show Home link when not in GPT search view */}
           {!showGptSearch && (
-            <Link to="/browse" onClick={() => setIsMenuOpen(false)}>
-              <span className="border-b-2 border-red-600 pb-1 text-white text-xl hover:text-red-600 transition duration-300 cursor-pointer">
-                Home
-              </span>
-            </Link>
+            <span
+              onClick={() => {
+                setIsMenuOpen(false);
+                refreshAndNavigate();
+              }}
+              className="border-b-2 border-red-600 pb-1 text-white text-xl hover:text-red-600 transition duration-300 cursor-pointer"
+            >
+              Home
+            </span>
           )}
 
           <span
@@ -301,30 +204,18 @@ const Header = () => {
           </span>
 
           <div className="flex justify-around w-[35%] text-3xl">
-            <a
-              href="https://x.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white"
-            >
-              <FaXTwitter />
-            </a>
-            <a
-              href="https://www.linkedin.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500"
-            >
-              <FaLinkedin />
-            </a>
-            <a
-              href="https://www.instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-pink-500"
-            >
-              <FaInstagram />
-            </a>
+            <FaXTwitter
+              className="text-white cursor-pointer"
+              onClick={() => window.open("https://x.com", "_blank")}
+            />
+            <FaLinkedin
+              className="text-blue-500 cursor-pointer"
+              onClick={() => window.open("https://www.linkedin.com", "_blank")}
+            />
+            <FaInstagram
+              className="text-pink-500 cursor-pointer"
+              onClick={() => window.open("https://www.instagram.com", "_blank")}
+            />
           </div>
         </div>
       </div>

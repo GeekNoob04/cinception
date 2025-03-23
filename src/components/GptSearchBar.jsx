@@ -3,7 +3,7 @@ import LangConstants from "../utils/LangConstants";
 import { useDispatch, useSelector } from "react-redux";
 import geminiUtils from "../utils/gemini";
 import { API_OPTIONS } from "../utils/constant";
-import { addGeminiMovieResult } from "../utils/gptSlice";
+import { addGeminiMovieResult, setGeminiLoading } from "../utils/gptSlice";
 
 const GptSearchBar = () => {
   const dispatch = useDispatch();
@@ -78,6 +78,7 @@ const GptSearchBar = () => {
 
     if (!query) return;
     setIsLoading(true);
+    dispatch(setGeminiLoading(true));
 
     try {
       // Adapt the prompt based on whether it looks like a movie title or genre/category
@@ -167,10 +168,12 @@ const GptSearchBar = () => {
 
       dispatch(
         addGeminiMovieResult({
-          movieNames: [limitedMovies],
-          movieResults: [finalTmdbResults],
+          movieNames: limitedMovies,
+          movieResults: finalTmdbResults,
         })
       );
+
+      dispatch(setGeminiLoading(false));
     } catch (error) {
       console.error("Error generating movie recommendations:", error);
     } finally {
@@ -179,30 +182,56 @@ const GptSearchBar = () => {
   };
 
   return (
-    <div className="pt-20 md:pt-32 flex justify-center">
+    <div className="pt-20 md:pt-32 flex flex-col items-center">
+      <h1 className="text-3xl md:text-5xl font-bold mb-6 text-white text-center">
+        {LangConstants[langKey]?.GptSearchHeading ||
+          "Discover Your Next Favorite Movie"}
+      </h1>
+
+      <p className="text-gray-300 text-center max-w-2xl mb-8 text-sm md:text-base">
+        {LangConstants[langKey]?.GptSearchDescription ||
+          "Get AI-powered recommendations based on your movie preferences"}
+      </p>
+
       <form
-        className="w-full md:w-1/2 grid grid-cols-12 bg-black bg-opacity-75 rounded-lg shadow-lg"
+        className="w-full md:w-1/2 relative group"
         onSubmit={(e) => e.preventDefault()}
       >
-        <input
-          ref={searchText}
-          type="text"
-          className="p-4 m-4 bg-white col-span-9 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-          placeholder={LangConstants[langKey].GptSearchPlaceHolder}
-          disabled={isLoading}
-        />
-        <button
-          className={`col-span-3 m-4 py-2 px-4 rounded-md transition-colors duration-300 ${
-            isLoading
-              ? "bg-gray-600 cursor-not-allowed"
-              : "bg-red-600 hover:bg-red-700"
-          } text-white font-medium`}
-          onClick={handleGptSearchClick}
-          disabled={isLoading}
-        >
-          {isLoading ? "Loading..." : LangConstants[langKey].search}
-        </button>
+        <div className="backdrop-blur-sm bg-black/30 p-0.5 rounded-xl transition-all duration-300 shadow-lg group-hover:shadow-xl group-hover:shadow-red-500/20 shadow-red-500/10">
+          <div className="flex rounded-xl overflow-hidden">
+            <input
+              ref={searchText}
+              type="text"
+              className="p-4 md:p-5 bg-gray-900 bg-opacity-80 flex-grow text-white placeholder-gray-400 focus:outline-none text-sm md:text-base"
+              placeholder={LangConstants[langKey].GptSearchPlaceHolder}
+              disabled={isLoading}
+            />
+            <button
+              className={`px-5 md:px-8 transition-all duration-300 flex items-center justify-center ${
+                isLoading
+                  ? "bg-gray-700 cursor-not-allowed"
+                  : "bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800"
+              } text-white font-medium`}
+              onClick={handleGptSearchClick}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <div className="flex items-center justify-center">
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                  <span>{LangConstants[langKey]?.loading || "Loading..."}</span>
+                </div>
+              ) : (
+                <span>{LangConstants[langKey].search}</span>
+              )}
+            </button>
+          </div>
+        </div>
       </form>
+
+      <div className="mt-4 text-gray-400 text-xs md:text-sm text-center max-w-md">
+        {LangConstants[langKey]?.GptSearchTip ||
+          "Try 'sci-fi with plot twists', 'heartwarming family films', or a specific movie title"}
+      </div>
     </div>
   );
 };

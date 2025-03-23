@@ -1,31 +1,20 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import GeminiMovieCard from "./GeminiMovieCard";
+import MovieList from "./MovieList";
 
 const GptMovieSuggestions = () => {
-  const { movieResults, movieNames } = useSelector((store) => store.gemini);
+  const { movieResults, isLoading } = useSelector((store) => store.gemini);
 
-  if (!movieNames || !movieResults) return null;
-
-  const allMovies = Array.isArray(movieResults[0])
-    ? movieResults.flat()
-    : movieResults;
+  // Don't render anything if there's no data and we're not loading
+  if (!isLoading && (!movieResults || movieResults.length === 0)) return null;
 
   return (
-    <div className="p-4 md:p-6 m-2 md:m-4 bg-black bg-opacity-80 text-white rounded-lg">
-      <h2 className="text-2xl md:text-3xl font-bold mb-4">
-        Recommended Movies
-      </h2>
-      <div className="flex flex-wrap justify-center md:justify-start gap-4">
-        {allMovies.map((movie) => (
-          <GeminiMovieCard key={movie.id} movie={movie} />
-        ))}
-      </div>
-      {allMovies.length === 0 && (
-        <p className="text-center py-8 text-gray-400">
-          No movies found matching your search
-        </p>
-      )}
+    <div className="mt-12 px-4 py-6 backdrop-blur-sm bg-black/60 rounded-xl shadow-xl">
+      <MovieList
+        title="Recommended Movies"
+        movies={movieResults || []}
+        isLoading={isLoading}
+      />
     </div>
   );
 };
