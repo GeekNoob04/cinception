@@ -149,7 +149,6 @@ const GptSearchBar = () => {
         searchMovieWithFallback(movie)
       );
 
-      // Rest of your code remains the same...
       const initialResults = await Promise.all(initialResultsPromises);
       const validInitialResults = initialResults.filter(
         (result) => result !== null
@@ -165,7 +164,7 @@ const GptSearchBar = () => {
       );
 
       console.log("Final Movie Results:", finalTmdbResults);
-      // Store these results in your state or Redux store
+
       dispatch(
         addGeminiMovieResult({
           movieNames: [limitedMovies],
@@ -180,22 +179,24 @@ const GptSearchBar = () => {
   };
 
   return (
-    <div className="pt-[10%] flex justify-center">
+    <div className="pt-20 md:pt-32 flex justify-center">
       <form
-        className="bg-black w-1/2 grid grid-cols-12"
+        className="w-full md:w-1/2 grid grid-cols-12 bg-black bg-opacity-75 rounded-lg shadow-lg"
         onSubmit={(e) => e.preventDefault()}
       >
         <input
           ref={searchText}
           type="text"
-          className="p-4 m-4 bg-white col-span-9"
+          className="p-4 m-4 bg-white col-span-9 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
           placeholder={LangConstants[langKey].GptSearchPlaceHolder}
           disabled={isLoading}
         />
         <button
-          className={`col-span-3 m-4 py-2 px-4 ${
-            isLoading ? "bg-gray-600" : "bg-red-600"
-          } text-white rounded-lg`}
+          className={`col-span-3 m-4 py-2 px-4 rounded-md transition-colors duration-300 ${
+            isLoading
+              ? "bg-gray-600 cursor-not-allowed"
+              : "bg-red-600 hover:bg-red-700"
+          } text-white font-medium`}
           onClick={handleGptSearchClick}
           disabled={isLoading}
         >
