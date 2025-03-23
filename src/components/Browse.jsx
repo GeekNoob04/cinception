@@ -9,7 +9,7 @@ import useTopRatedSeries from "../hooks/usePopularSeries";
 import GptSearch from "./GptSearchPage";
 import { useSelector } from "react-redux";
 const Browse = () => {
-  const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
+  const showGptSearch = useSelector((store) => store.gemini.showGptSearch);
 
   useNowPlayingMovies();
   usePopularMovies();

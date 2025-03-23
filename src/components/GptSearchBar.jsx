@@ -11,7 +11,6 @@ const GptSearchBar = () => {
   const searchText = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Enhanced search for each movie with better matching
   const searchMovieTMDB = async (movieName) => {
     try {
       const data = await fetch(
@@ -27,41 +26,31 @@ const GptSearchBar = () => {
         return null;
       }
 
-      // Use a scoring system to find the best match
       const scoredResults = json.results.map((movie) => {
         let score = 0;
         const movieTitle = movie.title.toLowerCase();
         const searchTitle = movieName.trim().toLowerCase();
 
-        // Exact match gets highest score
         if (movieTitle === searchTitle) {
           score += 100;
-        }
-        // Title starts with search term
-        else if (movieTitle.startsWith(searchTitle)) {
+        } else if (movieTitle.startsWith(searchTitle)) {
           score += 50;
-        }
-        // Title contains search term as a word
-        else if (
+        } else if (
           movieTitle.includes(` ${searchTitle} `) ||
           movieTitle.includes(`${searchTitle} `) ||
           movieTitle.includes(` ${searchTitle}`)
         ) {
           score += 30;
-        }
-        // Title contains search term
-        else if (movieTitle.includes(searchTitle)) {
+        } else if (movieTitle.includes(searchTitle)) {
           score += 20;
         }
 
-        // Boost score for popular and well-rated movies
         score += (movie.vote_average || 0) * 2;
         score += Math.min((movie.vote_count || 0) / 1000, 10);
 
         return { ...movie, matchScore: score };
       });
 
-      // Sort by score and return the best match
       scoredResults.sort((a, b) => b.matchScore - a.matchScore);
       return scoredResults[0];
     } catch (error) {
@@ -91,12 +80,43 @@ const GptSearchBar = () => {
     setIsLoading(true);
 
     try {
-      // Use a more specific prompt to get better recommendations
-      const prompt = `Act as a movie recommendation system and suggest exactly 10 movies that are genuinely ${query}. 
-      Consider the thematic elements, tone, and genre. For example, if someone asks for "dark movies", 
-      recommend movies that are actually dark in theme or tone (like "Taxi Driver", "Se7en", "Requiem for a Dream"), 
-      not just movies with "dark" in the title. 
-      Only return a comma-separated list of movie titles with no additional text or explanation.`;
+      // Adapt the prompt based on whether it looks like a movie title or genre/category
+      const isLikelyMovieTitle =
+        query.length > 3 &&
+        ![
+          "movie",
+          "movies",
+          "film",
+          "films",
+          "comedy",
+          "action",
+          "drama",
+          "horror",
+          "thriller",
+          "funny",
+          "scary",
+          "sad",
+          "happy",
+          "dark",
+          "light",
+          "best",
+          "top",
+        ].some((term) => query.toLowerCase().includes(term));
+
+      let prompt;
+
+      if (isLikelyMovieTitle) {
+        prompt = `Act as a movie recommendation system. The user is looking for movies similar to "${query}".
+        Suggest exactly 10 movies that are similar in theme, style, plot, or director to "${query}".
+        Include "${query}" as the first movie in your list if it's a valid movie title.
+        Only return a comma-separated list of movie titles with no additional text or explanation.`;
+      } else {
+        prompt = `Act as a movie recommendation system and suggest exactly 10 movies that are genuinely ${query}. 
+        Consider the thematic elements, tone, and genre. For example, if someone asks for "dark movies", 
+        recommend movies that are actually dark in theme or tone (like "Taxi Driver", "Se7en", "Requiem for a Dream"), 
+        not just movies with "dark" in the title. 
+        Only return a comma-separated list of movie titles with no additional text or explanation.`;
+      }
 
       const response = await geminiUtils.generateContent(prompt);
       const formattedResponse = [
@@ -115,9 +135,21 @@ const GptSearchBar = () => {
 
       const limitedMovies = geminiMovies.slice(0, 10);
 
+      const searchMovieWithFallback = async (movieName) => {
+        const result = await searchMovieTMDB(movieName);
+        if (result) return result;
+        const simplifiedName = movieName.split(":")[0].split("(")[0].trim();
+        if (simplifiedName.length > 3 && simplifiedName !== movieName) {
+          return await searchMovieTMDB(simplifiedName);
+        }
+        return null;
+      };
+
       const initialResultsPromises = limitedMovies.map((movie) =>
-        searchMovieTMDB(movie)
+        searchMovieWithFallback(movie)
       );
+
+      // Rest of your code remains the same...
       const initialResults = await Promise.all(initialResultsPromises);
       const validInitialResults = initialResults.filter(
         (result) => result !== null
@@ -136,8 +168,8 @@ const GptSearchBar = () => {
       // Store these results in your state or Redux store
       dispatch(
         addGeminiMovieResult({
-          movieNames: limitedMovies,
-          movieResults: finalTmdbResults,
+          movieNames: [limitedMovies],
+          movieResults: [finalTmdbResults],
         })
       );
     } catch (error) {
