@@ -1,5 +1,6 @@
 import React from "react";
 import MovieCard from "./MovieCard";
+import ShimmerUi from "./ShimmerUi";
 
 const MovieList = ({ title, movies }) => {
   // console.log(movies);
@@ -13,7 +14,7 @@ const MovieList = ({ title, movies }) => {
               <MovieCard key={movie.id} posterPath={movie.poster_path} />
             ))
           ) : (
-            <p>No movies found</p>
+            <ShimmerUi />
           )}
         </div>
       </div>
