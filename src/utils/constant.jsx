@@ -1,5 +1,6 @@
 export const LOGO =
-  "https://fontmeme.com/permalink/250323/fc8a5e7dc5dc7a33f35df93ee0ac8850.png";
+  // "https://fontmeme.com/permalink/250323/fc8a5e7dc5dc7a33f35df93ee0ac8850.png";
+  "https://fontmeme.com/permalink/250323/0d1731b7e71e9e482a2babcf857d6171.png";
 
 export const USER_AVATAR =
   "https://occ-0-6246-2186.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABTZ2zlLdBVC05fsd2YQAR43J6vB1NAUBOOrxt7oaFATxMhtdzlNZ846H3D8TZzooe2-FT853YVYs8p001KVFYopWi4D4NXM.png?r=229";
