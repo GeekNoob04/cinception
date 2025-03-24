@@ -20,8 +20,6 @@ export default defineConfig({
           // Redux and related libraries
           "redux-vendor": ["react-redux", "redux", "@reduxjs/toolkit"],
 
-          // Any other large libraries used in your project
-          "ui-components": ["@/components/ui"],
         },
       },
     },
