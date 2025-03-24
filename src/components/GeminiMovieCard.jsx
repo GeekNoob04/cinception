@@ -207,12 +207,12 @@ const GeminiMovieCard = ({ movie }) => {
           onClick={handleShowInfo}
           loading="lazy"
         />
-        <div className="p-2 bg-gray-900 bg-opacity-80">
-          <h3 className="text-white text-sm md:text-base font-medium truncate">
+        <div className="p-2 bg-gray-900 bg-opacity-80 text-center">
+          <h3 className="text-white text-sm md:text-base font-medium truncate text-center">
             {movie?.title || movie?.name || "Movie Title"}
           </h3>
           {movie?.vote_average && (
-            <div className="flex items-center mt-1">
+            <div className="flex items-center justify-center mt-1">
               <FaStar className="text-yellow-500 mr-1 text-xs md:text-sm" />
               <span className="text-white text-xs md:text-sm">
                 {Math.round(movie.vote_average * 10) / 10}
