@@ -14,6 +14,14 @@ const Body = () => {
       path: "/browse",
       element: <Browse />,
     },
+    {
+      path: "/favourites",
+      element: <Favourites />,
+    },
+    {
+      path: "*",
+      element: <Login />,
+    },
   ]);
 
   return (
