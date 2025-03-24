@@ -1,6 +1,6 @@
-// src/components/Favourites.jsx
 import React from "react";
 import Header from "./Header";
+// import { useSelector } from "react-redux";
 
 const Favourites = () => {
   return (
