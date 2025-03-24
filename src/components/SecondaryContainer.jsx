@@ -7,9 +7,12 @@ const SecondaryContainer = () => {
 
   if (!movies.nowPlayingMovies) return null;
 
+  // In SecondaryContainer.jsx
   return (
     <div className="bg-black">
-      <div className="-mt-16 md:-mt-32 relative z-20 pb-12">
+      <div className="-mt-24 md:-mt-40 relative z-20 pb-12">
+        {" "}
+        {/* Changed from -mt-16 md:-mt-32 */}
         <MovieList title={"Now Playing"} movies={movies.nowPlayingMovies} />
         <MovieList title={"Top Rated"} movies={movies.nowTopRatedMovies} />
         <MovieList title={"Popular"} movies={movies.nowPopularMovies} />
