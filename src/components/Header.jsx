@@ -14,7 +14,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation(); // Add useLocation hook to get current path
+  const location = useLocation();
   const user = useSelector((store) => store.user);
   const showGptSearch = useSelector((store) => store.gemini.showGptSearch);
 
@@ -41,9 +41,9 @@ const Header = () => {
     }
   };
 
-  // Function to refresh page and navigate to browse
-  const refreshAndNavigate = () => {
-    window.location.href = "/browse";
+  // Updated function to use navigate instead of window.location.href
+  const navigateToBrowse = () => {
+    navigate("/browse");
   };
 
   useEffect(() => {
@@ -71,7 +71,7 @@ const Header = () => {
     });
 
     return () => unsubscribe();
-  }, [location.pathname]); // Add location.pathname to dependencies
+  }, [location.pathname]);
 
   return (
     <div>
@@ -81,7 +81,7 @@ const Header = () => {
             src={LOGO}
             className="w-full cursor-pointer"
             alt="Logo"
-            onClick={user ? refreshAndNavigate : () => navigate("/")}
+            onClick={user ? navigateToBrowse : () => navigate("/")}
           />
         </div>
 
@@ -100,7 +100,7 @@ const Header = () => {
               {/* Only show Home button when not in GPT search view */}
               {!showGptSearch && (
                 <button
-                  onClick={refreshAndNavigate}
+                  onClick={navigateToBrowse}
                   className="text-white bg-red-600 px-3 py-1 rounded hover:bg-red-700 transition duration-300"
                 >
                   Home
@@ -150,7 +150,7 @@ const Header = () => {
             <span
               onClick={() => {
                 setIsMenuOpen(false);
-                refreshAndNavigate();
+                navigateToBrowse();
               }}
               className="border-b-2 border-red-600 pb-1 text-white text-xl hover:text-red-600 transition duration-300 cursor-pointer"
             >
