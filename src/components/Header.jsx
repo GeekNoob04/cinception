@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { addUser, removeUser } from "../utils/userSlice";
@@ -14,6 +14,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation(); // Add useLocation hook to get current path
   const user = useSelector((store) => store.user);
   const showGptSearch = useSelector((store) => store.gemini.showGptSearch);
 
@@ -30,6 +31,14 @@ const Header = () => {
 
   const handleGptSearchClick = () => {
     dispatch(toggleGptSearchView());
+    if (!showGptSearch) {
+      navigate("/browse");
+    } else {
+      // If we're turning it off, stay on the current page (or go back to browse)
+      if (location.pathname !== "/favourites") {
+        navigate("/browse");
+      }
+    }
   };
 
   // Function to refresh page and navigate to browse
@@ -49,7 +58,11 @@ const Header = () => {
             photoURL: photoURL,
           })
         );
-        navigate("/browse");
+
+        // Only navigate to /browse if user is on the login page or an invalid route
+        if (location.pathname === "/" || location.pathname === "*") {
+          navigate("/browse");
+        }
       } else {
         // User is signed out
         dispatch(removeUser());
@@ -58,7 +71,7 @@ const Header = () => {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [location.pathname]); // Add location.pathname to dependencies
 
   return (
     <div>
