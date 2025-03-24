@@ -187,15 +187,27 @@ const Header = () => {
           <div className="flex justify-around w-[35%] text-3xl">
             <FaXTwitter
               className="text-white cursor-pointer"
-              onClick={() => window.open("https://x.com", "_blank")}
+              onClick={() =>
+                window.open("https://x.com/BudhrajaHarshit", "_blank")
+              }
             />
             <FaLinkedin
               className="text-blue-500 cursor-pointer"
-              onClick={() => window.open("https://www.linkedin.com", "_blank")}
+              onClick={() =>
+                window.open(
+                  "https://www.linkedin.com/in/harshit-budhraja-621a70251/",
+                  "_blank"
+                )
+              }
             />
             <FaInstagram
               className="text-pink-500 cursor-pointer"
-              onClick={() => window.open("https://www.instagram.com", "_blank")}
+              onClick={() =>
+                window.open(
+                  "https://www.instagram.com/harshitisdelusional/",
+                  "_blank"
+                )
+              }
             />
           </div>
         </div>
