@@ -5,8 +5,6 @@ import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { addUser, removeUser } from "../utils/userSlice";
 import { toggleGptSearchView } from "../utils/gptSlice";
-import { changeLang } from "../utils/configSlice";
-import { SUPPORTED_LANGUAGES } from "../utils/LangConstants";
 import { LOGO } from "../utils/constant";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdClose } from "react-icons/io";
@@ -32,10 +30,6 @@ const Header = () => {
 
   const handleGptSearchClick = () => {
     dispatch(toggleGptSearchView());
-  };
-
-  const handleLangChange = (e) => {
-    dispatch(changeLang(e.target.value));
   };
 
   // Function to refresh page and navigate to browse
@@ -90,19 +84,6 @@ const Header = () => {
 
             {/* Desktop Menu */}
             <div className="hidden md:flex md:items-center md:space-x-6 md:ml-auto">
-              {showGptSearch && (
-                <select
-                  className="p-2 mr-6 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-                  onChange={handleLangChange}
-                >
-                  {SUPPORTED_LANGUAGES.map((lang) => (
-                    <option key={lang.identifier} value={lang.identifier}>
-                      {lang.name}
-                    </option>
-                  ))}
-                </select>
-              )}
-
               {/* Only show Home button when not in GPT search view */}
               {!showGptSearch && (
                 <button
@@ -151,19 +132,6 @@ const Header = () => {
           />
         </div>
         <div className="flex flex-col items-end pr-4 pt-8 space-y-8">
-          {showGptSearch && (
-            <select
-              className="p-2 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 w-full max-w-xs"
-              onChange={handleLangChange}
-            >
-              {SUPPORTED_LANGUAGES.map((lang) => (
-                <option key={lang.identifier} value={lang.identifier}>
-                  {lang.name}
-                </option>
-              ))}
-            </select>
-          )}
-
           {/* Only show Home link when not in GPT search view */}
           {!showGptSearch && (
             <span

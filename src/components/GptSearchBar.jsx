@@ -1,13 +1,11 @@
 import React, { useRef, useState } from "react";
-import LangConstants from "../utils/LangConstants";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import geminiUtils from "../utils/gemini";
 import { API_OPTIONS } from "../utils/constant";
 import { addGeminiMovieResult, setGeminiLoading } from "../utils/gptSlice";
 
 const GptSearchBar = () => {
   const dispatch = useDispatch();
-  const langKey = useSelector((store) => store.config.lang);
   const searchText = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -184,13 +182,11 @@ const GptSearchBar = () => {
   return (
     <div className="pt-20 md:pt-32 flex flex-col items-center">
       <h1 className="text-3xl md:text-5xl font-bold mb-6 text-white text-center">
-        {LangConstants[langKey]?.GptSearchHeading ||
-          "Discover Your Next Favorite Movie"}
+        Discover Your Next Favorite Movie
       </h1>
 
       <p className="text-gray-300 text-center max-w-2xl mb-8 text-sm md:text-base">
-        {LangConstants[langKey]?.GptSearchDescription ||
-          "Get AI-powered recommendations based on your movie preferences"}
+        Get AI-powered recommendations based on your movie preferences
       </p>
 
       <form
@@ -203,7 +199,7 @@ const GptSearchBar = () => {
               ref={searchText}
               type="text"
               className="p-4 md:p-5 bg-gray-900 bg-opacity-80 flex-grow text-white placeholder-gray-400 focus:outline-none text-sm md:text-base"
-              placeholder={LangConstants[langKey].GptSearchPlaceHolder}
+              placeholder="Search for movies or describe what you want to watch..."
               disabled={isLoading}
             />
             <button
@@ -218,10 +214,10 @@ const GptSearchBar = () => {
               {isLoading ? (
                 <div className="flex items-center justify-center">
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                  <span>{LangConstants[langKey]?.loading || "Loading..."}</span>
+                  <span>Loading...</span>
                 </div>
               ) : (
-                <span>{LangConstants[langKey].search}</span>
+                <span>Search</span>
               )}
             </button>
           </div>
@@ -229,8 +225,8 @@ const GptSearchBar = () => {
       </form>
 
       <div className="mt-4 text-gray-400 text-xs md:text-sm text-center max-w-md">
-        {LangConstants[langKey]?.GptSearchTip ||
-          "Try 'sci-fi with plot twists', 'heartwarming family films', or a specific movie title"}
+        Try 'sci-fi with plot twists', 'heartwarming family films', or a
+        specific movie title
       </div>
     </div>
   );
