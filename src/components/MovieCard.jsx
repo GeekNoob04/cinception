@@ -200,7 +200,6 @@ const MovieCard = memo(({ posterPath, movieData }) => {
             vote_average: movieData.vote_average,
             release_date: movieData.release_date || movieData.first_air_date,
             original_language: movieData.original_language,
-            // Include any other fields you want to display in the favorites page
           })
         );
       }
