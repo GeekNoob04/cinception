@@ -9,6 +9,7 @@ import { LOGO } from "../utils/constant";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdClose } from "react-icons/io";
 import { FaXTwitter, FaInstagram, FaLinkedin } from "react-icons/fa6";
+import { FaSearch } from "react-icons/fa";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -70,12 +71,13 @@ const Header = () => {
       }
     });
 
+    // Add dependencies to useEffect
     return () => unsubscribe();
-  }, [location.pathname]);
+  }, [dispatch, navigate, location.pathname]);
 
   return (
     <div>
-      <div className="fixed top-0 w-full z-50 bg-gradient-to-b from-black to-transparent flex justify-between items-center p-4 md:px-10 md:py-6">
+      <div className="absolute top-0 w-full z-50 bg-gradient-to-b from-black to-transparent flex justify-between items-center p-4 md:px-10 md:py-6">
         <div className="w-32 md:w-44 md:ml-4">
           <img
             src={LOGO}
@@ -101,30 +103,73 @@ const Header = () => {
               {!showGptSearch && (
                 <button
                   onClick={navigateToBrowse}
-                  className="text-white bg-red-600 px-3 py-1 rounded hover:bg-red-700 transition duration-300"
+                  className="text-white font-medium relative group px-2 py-1"
                 >
-                  Home
+                  <span className="relative inline-block">
+                    <span className="block transition-colors duration-300 group-hover:text-gray-300">
+                      Home
+                    </span>
+                    <span
+                      className="absolute bottom-0 left-0 w-full h-0.5 bg-white 
+                      transform origin-center scale-x-0 
+                      transition-transform duration-300 
+                      group-hover:scale-x-100 group-hover:origin-center"
+                    ></span>
+                  </span>
                 </button>
               )}
 
               <button
                 onClick={handleGptSearchClick}
-                className="text-white bg-red-600 px-3 py-1 rounded hover:bg-red-700 transition duration-300"
+                className="text-white font-medium relative group px-2 py-1 flex items-center"
               >
-                {showGptSearch ? "Home" : "AI Recommends"}
+                <span className="relative flex items-center">
+                  {!showGptSearch && (
+                    <FaSearch className="mr-2 w-4 h-4 align-middle" />
+                  )}
+                  <span className="block transition-colors duration-300 group-hover:text-gray-300 align-middle">
+                    {showGptSearch ? "Home" : "AI Search"}
+                  </span>
+                  <span
+                    className="absolute bottom-0 left-0 w-full h-0.5 bg-white 
+                    transform origin-center scale-x-0 
+                    transition-transform duration-300 
+                    group-hover:scale-x-100 group-hover:origin-center"
+                  ></span>
+                </span>
               </button>
 
               <Link to="/favourites">
-                <button className="text-white bg-red-600 px-3 py-1 rounded hover:bg-red-700 transition duration-300">
-                  Favourites
+                <button className="text-white font-medium relative group px-2 py-1">
+                  <span className="relative inline-block">
+                    <span className="block transition-colors duration-300 group-hover:text-gray-300">
+                      Favourites
+                    </span>
+                    <span
+                      className="absolute bottom-0 left-0 w-full h-0.5 bg-white 
+                      transform origin-center scale-x-0 
+                      transition-transform duration-300 
+                      group-hover:scale-x-100 group-hover:origin-center"
+                    ></span>
+                  </span>
                 </button>
               </Link>
 
               <button
                 onClick={handleSignOut}
-                className="text-white bg-red-600 px-3 py-1 rounded hover:bg-red-700 transition duration-300"
+                className="text-white font-medium relative group px-2 py-1"
               >
-                Sign Out
+                <span className="relative inline-block">
+                  <span className="block transition-colors duration-300 group-hover:text-gray-300">
+                    Sign Out
+                  </span>
+                  <span
+                    className="absolute bottom-0 left-0 w-full h-0.5 bg-white 
+                    transform origin-center scale-x-0 
+                    transition-transform duration-300 
+                    group-hover:scale-x-100 group-hover:origin-center"
+                  ></span>
+                </span>
               </button>
             </div>
           </>
@@ -152,7 +197,7 @@ const Header = () => {
                 setIsMenuOpen(false);
                 navigateToBrowse();
               }}
-              className="border-b-2 border-red-600 pb-1 text-white text-xl hover:text-red-600 transition duration-300 cursor-pointer"
+              className="text-white text-xl hover:text-gray-300 transition duration-300 cursor-pointer"
             >
               Home
             </span>
@@ -163,13 +208,16 @@ const Header = () => {
               handleGptSearchClick();
               setIsMenuOpen(false);
             }}
-            className="border-b-2 border-red-600 pb-1 text-white text-xl hover:text-red-600 transition duration-300 cursor-pointer"
+            className="text-white text-xl hover:text-gray-300 transition duration-300 cursor-pointer flex items-center"
           >
-            {showGptSearch ? "Home" : "AI Recommends"}
+            {!showGptSearch && <FaSearch className="mr-2 align-middle" />}
+            <span className="align-middle">
+              {showGptSearch ? "Home" : "AI Search"}
+            </span>
           </span>
 
           <Link to="/favourites" onClick={() => setIsMenuOpen(false)}>
-            <span className="border-b-2 border-red-600 pb-1 text-white text-xl hover:text-red-600 transition duration-300 cursor-pointer">
+            <span className="text-white text-xl hover:text-gray-300 transition duration-300 cursor-pointer">
               Favourites
             </span>
           </Link>
@@ -179,7 +227,7 @@ const Header = () => {
               handleSignOut();
               setIsMenuOpen(false);
             }}
-            className="border-b-2 border-red-600 pb-1 text-white text-xl hover:text-red-600 transition duration-300 cursor-pointer"
+            className="text-white text-xl hover:text-gray-300 transition duration-300 cursor-pointer"
           >
             Sign Out
           </span>
