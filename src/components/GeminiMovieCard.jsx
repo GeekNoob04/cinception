@@ -1,13 +1,14 @@
 import React, { useState, useCallback, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addFav, removeFav } from "../utils/favoritesSlice";
 import { IMG_CDN_URL } from "../utils/constant";
 import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import { FaStar } from "react-icons/fa";
 import { BsBookmarkPlusFill, BsFillBookmarkCheckFill } from "react-icons/bs";
-import { useSelector } from "react-redux";
 import useMovieTrailer from "../hooks/useMovieTrailer";
 
-// LoadingPlaceholder component remains the same
+// LoadingPlaceholder component
 const LoadingPlaceholder = React.memo(() => (
   <>
     <div className="h-8 bg-gray-300 rounded w-3/4 mb-4 animate-pulse"></div>
@@ -19,7 +20,7 @@ const LoadingPlaceholder = React.memo(() => (
   </>
 ));
 
-// Updated MovieDetails component with dark theme
+// MovieDetails component
 const MovieDetails = React.memo(({ displayData, trailerVideo, isLoading }) => (
   <div className="text-white">
     <h1 className="text-2xl md:text-4xl my-2 font-semibold">
@@ -70,12 +71,11 @@ const MovieDetails = React.memo(({ displayData, trailerVideo, isLoading }) => (
   </div>
 ));
 
-// Updated MovieModal with dark theme
+// MovieModal component
 const MovieModal = React.memo(
   ({
     showInfoModal,
     closeModal,
-    stopPropagation,
     displayData,
     trailerVideo,
     isLoading,
@@ -100,7 +100,7 @@ const MovieModal = React.memo(
         >
           <div
             className="w-[85vw] md:w-[70vw] h-[90vh] md:h-auto bg-neutral-900 text-white p-8 rounded-lg relative overflow-y-auto"
-            onClick={stopPropagation}
+            onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={closeModal}
@@ -146,38 +146,36 @@ const MovieModal = React.memo(
   }
 );
 
-// Other components (display names, etc.) remain the same
-LoadingPlaceholder.displayName = "LoadingPlaceholder";
-MovieDetails.displayName = "MovieDetails";
-MovieModal.displayName = "MovieModal";
-
 const GeminiMovieCard = ({ movie }) => {
-  const [isFavorite, setIsFavorite] = useState(false);
+  const dispatch = useDispatch();
+  const favourites = useSelector((store) => store.favourites.favourites);
+
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Rest of the component remains the same
+  const isFavorite = useMemo(
+    () => favourites.some((fav) => fav.id === movie.id),
+    [favourites, movie.id]
+  );
+
   const trailerVideo = useSelector((store) => store.movies?.trailerVideo);
-  const movieDetails = useSelector((store) => store.movies?.movieDetails);
 
   useMovieTrailer(showInfoModal && movie?.id ? movie.id : null);
 
-  const displayData = useMemo(
-    () => (showInfoModal && movieDetails ? movieDetails : movie),
-    [showInfoModal, movieDetails, movie]
-  );
-
   const posterPath = movie?.poster_path;
+  if (!posterPath) return null;
 
-  if (!posterPath) {
-    console.log("No poster path for movie:", movie?.title || "Unknown movie");
-    return null;
-  }
-
-  const handleFavoriteToggle = useCallback((e) => {
-    e.stopPropagation();
-    setIsFavorite((prev) => !prev);
-  }, []);
+  const handleFavoriteToggle = useCallback(
+    (e) => {
+      e.stopPropagation();
+      if (isFavorite) {
+        dispatch(removeFav(movie.id));
+      } else {
+        dispatch(addFav(movie));
+      }
+    },
+    [dispatch, isFavorite, movie]
+  );
 
   const handleShowInfo = useCallback(() => {
     setIsLoading(true);
@@ -187,10 +185,6 @@ const GeminiMovieCard = ({ movie }) => {
 
   const closeModal = useCallback(() => {
     setShowInfoModal(false);
-  }, []);
-
-  const stopPropagation = useCallback((e) => {
-    e.stopPropagation();
   }, []);
 
   return (
@@ -205,7 +199,7 @@ const GeminiMovieCard = ({ movie }) => {
         />
         <div className="p-2 bg-gray-900 bg-opacity-80 text-center">
           <h3 className="text-white text-sm md:text-base font-medium truncate text-center">
-            {movie?.title || movie?.name || "Movie Title"}
+            {movie?.title || "Movie Title"}
           </h3>
           {movie?.vote_average && (
             <div className="flex items-center justify-center mt-1">
@@ -233,8 +227,7 @@ const GeminiMovieCard = ({ movie }) => {
       <MovieModal
         showInfoModal={showInfoModal}
         closeModal={closeModal}
-        stopPropagation={stopPropagation}
-        displayData={displayData}
+        displayData={movie}
         trailerVideo={trailerVideo}
         isLoading={isLoading}
         posterPath={posterPath}
@@ -242,7 +235,5 @@ const GeminiMovieCard = ({ movie }) => {
     </div>
   );
 };
-
-GeminiMovieCard.displayName = "GeminiMovieCard";
 
 export default GeminiMovieCard;
