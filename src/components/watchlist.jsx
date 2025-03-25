@@ -47,7 +47,7 @@ const Watchlist = () => {
                   onClick={() => openInfoModal(movie)}
                   loading="lazy"
                 />
-                <div className="p-2 bg-gray-900 bg-opacity-80 text-center">
+                <div className="p-2 bg-black bg-opacity-80 text-center">
                   <h3 className="text-white text-sm md:text-base font-medium truncate text-center">
                     {movie.title || "Movie Title"}
                   </h3>
