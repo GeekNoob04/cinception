@@ -3,8 +3,9 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Header from "./Header"; // Import the Header component
 import Login from "./Login";
 import Browse from "./Browse";
-import Favourites from "./Favourites";
+import Watchlist from "./watchlist";
 import GptSearch from "./GptSearch";
+import ErrorPage from "./ErrorPage";
 
 // Define the layout inside Body.jsx
 const Layout = () => {
@@ -24,8 +25,8 @@ const appRouter = createBrowserRouter([
       { path: "/", element: <Login /> },
       { path: "/browse", element: <Browse /> },
       { path: "/search", element: <GptSearch /> },
-      { path: "/favourites", element: <Favourites /> },
-      { path: "*", element: <Login /> },
+      { path: "/watchlist", element: <Watchlist /> },
+      { path: "*", element: <ErrorPage /> },
     ],
   },
 ]);

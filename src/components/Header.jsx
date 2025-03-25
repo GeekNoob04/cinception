@@ -65,7 +65,9 @@ const Header = () => {
             src={LOGO}
             className="w-full cursor-pointer"
             alt="Logo"
-            onClick={user ? navigateToBrowse : () => navigate("/")}
+            onClick={() => {
+              user ? window.location.reload() : navigate("/");
+            }}
           />
         </div>
 
@@ -84,7 +86,7 @@ const Header = () => {
                   onClick={navigateToBrowse}
                   className="text-white font-medium relative group px-2 py-1"
                 >
-                  <span className="relative inline-block">
+                  <span className="relative inline-block cursor-pointer">
                     <span className="block transition-colors duration-300 group-hover:text-gray-300">
                       Home
                     </span>
@@ -102,7 +104,7 @@ const Header = () => {
               <Link to="/search">
                 <button className="text-white font-medium relative group px-2 py-1 flex items-center">
                   <FaSearch className="mr-2 w-4 h-4 align-middle" />
-                  <span className="block transition-colors duration-300 group-hover:text-gray-300 align-middle">
+                  <span className="block transition-colors duration-300 group-hover:text-gray-300 align-middle cursor-pointer">
                     AI Search
                   </span>
                   <span
@@ -114,11 +116,11 @@ const Header = () => {
                 </button>
               </Link>
 
-              <Link to="/favourites">
+              <Link to="/watchlist">
                 <button className="text-white font-medium relative group px-2 py-1">
-                  <span className="relative inline-block">
+                  <span className="relative inline-block cursor-pointer">
                     <span className="block transition-colors duration-300 group-hover:text-gray-300">
-                      Favourites
+                      Watchlist
                     </span>
                     <span
                       className="absolute bottom-0 left-0 w-full h-0.5 bg-white 
@@ -134,7 +136,7 @@ const Header = () => {
                 onClick={handleSignOut}
                 className="text-white font-medium relative group px-2 py-1"
               >
-                <span className="relative inline-block">
+                <span className="relative inline-block cursor-pointer">
                   <span className="block transition-colors duration-300 group-hover:text-gray-300">
                     Sign Out
                   </span>

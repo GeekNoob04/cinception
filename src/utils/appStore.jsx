@@ -6,14 +6,14 @@ import userReducer from "./userSlice";
 import moviesReducer from "./moviesSlice";
 import gptReducer from "./gptSlice";
 import configReducer from "./configSlice";
-import favouritesReducer from "./favoritesSlice"; // Ensure the correct file name is used
+import WatchlistReducer from "./favoritesSlice"; // Ensure the correct file name is used
 
 const rootReducer = combineReducers({
   user: userReducer,
   movies: moviesReducer,
   gemini: gptReducer,
   config: configReducer,
-  favourites: favouritesReducer, // Use correct reducer key
+  Watchlist: WatchlistReducer, // Use correct reducer key
 });
 
 const isClient = typeof window !== "undefined";

@@ -1,21 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const favouriteSlice = createSlice({
-  name: "favourites",
+const Watchlistlice = createSlice({
+  name: "Watchlist",
   initialState: {
-    favourites: [],
+    Watchlist: [],
   },
   reducers: {
     addFav: (state, action) => {
-      state.favourites.push(action.payload);
+      state.Watchlist.push(action.payload);
     },
     removeFav: (state, action) => {
-      state.favourites = state.favourites.filter(
+      state.Watchlist = state.Watchlist.filter(
         (movie) => movie.id !== action.payload // Removing based on movie ID
       );
     },
   },
 });
 
-export const { addFav, removeFav } = favouriteSlice.actions;
-export default favouriteSlice.reducer;
+export const { addFav, removeFav } = Watchlistlice.actions;
+export default Watchlistlice.reducer;

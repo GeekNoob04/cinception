@@ -148,14 +148,14 @@ const MovieModal = React.memo(
 
 const GeminiMovieCard = ({ movie }) => {
   const dispatch = useDispatch();
-  const favourites = useSelector((store) => store.favourites.favourites);
+  const Watchlist = useSelector((store) => store.Watchlist.Watchlist);
 
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const isFavorite = useMemo(
-    () => favourites.some((fav) => fav.id === movie.id),
-    [favourites, movie.id]
+    () => Watchlist.some((fav) => fav.id === movie.id),
+    [Watchlist, movie.id]
   );
 
   const trailerVideo = useSelector((store) => store.movies?.trailerVideo);
