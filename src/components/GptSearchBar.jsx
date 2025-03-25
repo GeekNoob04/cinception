@@ -34,7 +34,6 @@ const GptSearchBar = () => {
       ];
 
       const contentText = formattedResponse[0]?.message?.content || "";
-      console.log("AI Recommendations:", contentText);
 
       // Process the response to get movie titles
       const limitedMovies = processGeminiResponse(contentText);
@@ -58,8 +57,6 @@ const GptSearchBar = () => {
       const finalTmdbResults = detailedResults.filter(
         (movie) => movie !== null
       );
-
-      console.log("Final Movie Results:", finalTmdbResults);
 
       // Update Redux store with results
       dispatch(

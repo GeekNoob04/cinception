@@ -19,7 +19,7 @@ const Login = () => {
 
   const toggleSignInForm = () => {
     setIsSignInForm(!isSignInForm);
-    setErrors({ name: "", email: "", password: "" }); // Clear errors on form switch
+    setErrors({ name: "", email: "", password: "" });
   };
 
   const nameRef = useRef(null);
