@@ -7,28 +7,29 @@ import { BsBookmarkPlusFill, BsFillBookmarkCheckFill } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import useMovieTrailer from "../hooks/useMovieTrailer";
 
-// Extracted components for better organization
+// LoadingPlaceholder component remains the same
 const LoadingPlaceholder = React.memo(() => (
   <>
-    <div className="h-8 bg-gray-200 rounded w-3/4 mb-4 animate-pulse"></div>
-    <div className="h-4 bg-gray-200 rounded w-1/2 mb-2 animate-pulse"></div>
-    <div className="h-24 bg-gray-200 rounded w-full mb-4 animate-pulse"></div>
-    <div className="h-4 bg-gray-200 rounded w-1/4 mb-2 animate-pulse"></div>
-    <div className="h-4 bg-gray-200 rounded w-1/2 mb-2 animate-pulse"></div>
-    <div className="h-4 bg-gray-200 rounded w-full animate-pulse"></div>
+    <div className="h-8 bg-gray-300 rounded w-3/4 mb-4 animate-pulse"></div>
+    <div className="h-4 bg-gray-300 rounded w-1/2 mb-2 animate-pulse"></div>
+    <div className="h-24 bg-gray-300 rounded w-full mb-4 animate-pulse"></div>
+    <div className="h-4 bg-gray-300 rounded w-1/4 mb-2 animate-pulse"></div>
+    <div className="h-4 bg-gray-300 rounded w-1/2 mb-2 animate-pulse"></div>
+    <div className="h-4 bg-gray-300 rounded w-full animate-pulse"></div>
   </>
 ));
 
+// Updated MovieDetails component with dark theme
 const MovieDetails = React.memo(({ displayData, trailerVideo, isLoading }) => (
-  <>
-    <h1 className="text-2xl md:text-4xl my-2 font-semibold text-gray-800">
+  <div className="text-white">
+    <h1 className="text-2xl md:text-4xl my-2 font-semibold">
       {displayData?.title || displayData?.name || "Movie Title"}
     </h1>
-    <p className="text-gray-600 text-sm my-1">
+    <p className="text-gray-300 text-sm my-1">
       Release Date:{" "}
       {displayData?.release_date || displayData?.first_air_date || "N/A"}
     </p>
-    <p className="my-4 text-gray-700">
+    <p className="my-4">
       {displayData?.overview || "No description available."}
     </p>
     {displayData?.vote_average && (
@@ -37,7 +38,7 @@ const MovieDetails = React.memo(({ displayData, trailerVideo, isLoading }) => (
         {Math.round(displayData.vote_average * 10) / 10}/10
       </p>
     )}
-    <hr />
+    <hr className="border-gray-400" />
     {displayData?.original_language && (
       <p className="py-4">
         Language: {displayData.original_language.toUpperCase()}
@@ -45,13 +46,13 @@ const MovieDetails = React.memo(({ displayData, trailerVideo, isLoading }) => (
     )}
     {displayData?.genres && displayData.genres.length > 0 && (
       <>
-        <hr />
+        <hr className="border-gray-400" />
         <p className="py-4">
           Genres: {displayData.genres.map((genre) => genre.name).join(", ")}
         </p>
       </>
     )}
-    <hr />
+    <hr className="border-gray-400" />
     <div className="mt-8">
       {trailerVideo?.key ? (
         <a
@@ -66,10 +67,10 @@ const MovieDetails = React.memo(({ displayData, trailerVideo, isLoading }) => (
         !isLoading && <p>No trailer available</p>
       )}
     </div>
-  </>
+  </div>
 ));
 
-// Modal component extracted for better separation of concerns
+// Updated MovieModal with dark theme
 const MovieModal = React.memo(
   ({
     showInfoModal,
@@ -87,7 +88,7 @@ const MovieModal = React.memo(
         {/* Dark Background Overlay */}
         <div
           onClick={closeModal}
-          className="fixed inset-0 bg-black opacity-70 z-[10000]"
+          className="fixed inset-0 bg-black opacity-80 z-[10000]"
         ></div>
 
         <motion.div
@@ -98,7 +99,7 @@ const MovieModal = React.memo(
           onClick={closeModal}
         >
           <div
-            className="w-[85vw] md:w-[70vw] h-[90vh] md:h-auto bg-white p-8 rounded-lg relative overflow-y-auto"
+            className="w-[85vw] md:w-[70vw] h-[90vh] md:h-auto bg-neutral-900 text-white p-8 rounded-lg relative overflow-y-auto"
             onClick={stopPropagation}
           >
             <button
@@ -111,7 +112,7 @@ const MovieModal = React.memo(
             <div className="flex flex-col md:flex-row">
               <div className="w-full md:w-[37%] h-auto rounded-2xl mb-4 md:mb-0">
                 {isLoading ? (
-                  <div className="w-full h-72 md:h-[30rem] bg-gray-200 rounded-lg animate-pulse"></div>
+                  <div className="w-full h-72 md:h-[30rem] bg-gray-300 rounded-lg animate-pulse"></div>
                 ) : (
                   <img
                     src={
@@ -145,7 +146,7 @@ const MovieModal = React.memo(
   }
 );
 
-// Add display names to all memo components
+// Other components (display names, etc.) remain the same
 LoadingPlaceholder.displayName = "LoadingPlaceholder";
 MovieDetails.displayName = "MovieDetails";
 MovieModal.displayName = "MovieModal";
@@ -155,14 +156,12 @@ const GeminiMovieCard = ({ movie }) => {
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Get trailer video and movie details from Redux store
+  // Rest of the component remains the same
   const trailerVideo = useSelector((store) => store.movies?.trailerVideo);
   const movieDetails = useSelector((store) => store.movies?.movieDetails);
 
-  // Use the hook conditionally with the movie ID
   useMovieTrailer(showInfoModal && movie?.id ? movie.id : null);
 
-  // Use the combined data - prefer Redux state for detailed view but fallback to props
   const displayData = useMemo(
     () => (showInfoModal && movieDetails ? movieDetails : movie),
     [showInfoModal, movieDetails, movie]
@@ -170,13 +169,11 @@ const GeminiMovieCard = ({ movie }) => {
 
   const posterPath = movie?.poster_path;
 
-  // Early return if no poster
   if (!posterPath) {
     console.log("No poster path for movie:", movie?.title || "Unknown movie");
     return null;
   }
 
-  // Memoize event handlers to prevent unnecessary re-renders
   const handleFavoriteToggle = useCallback((e) => {
     e.stopPropagation();
     setIsFavorite((prev) => !prev);
@@ -185,7 +182,6 @@ const GeminiMovieCard = ({ movie }) => {
   const handleShowInfo = useCallback(() => {
     setIsLoading(true);
     setShowInfoModal(true);
-    // Set loading to false after a short delay to allow for the API call
     setTimeout(() => setIsLoading(false), 1000);
   }, []);
 
