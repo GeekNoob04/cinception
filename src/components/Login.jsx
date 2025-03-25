@@ -12,115 +12,116 @@ import { addUser } from "../utils/userSlice";
 import { BG_URL, USER_AVATAR } from "../utils/constant";
 
 const Login = () => {
-  const [isSignInForm, setisSignInForm] = useState(true);
-
-  const [errorMessage, seterrorMessage] = useState(null);
+  const [isSignInForm, setIsSignInForm] = useState(true);
+  const [errors, setErrors] = useState({ name: "", email: "", password: "" });
 
   const dispatch = useDispatch();
 
   const toggleSignInForm = () => {
-    setisSignInForm(!isSignInForm);
+    setIsSignInForm(!isSignInForm);
+    setErrors({ name: "", email: "", password: "" }); // Clear errors on form switch
   };
-  const name = useRef(null);
-  const email = useRef(null);
-  const password = useRef(null);
+
+  const nameRef = useRef(null);
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
 
   const handleButtonClick = () => {
-    // validate
-    // console.log(email.current.value);
-    // console.log(password.current.value);
+    const name = nameRef.current?.value;
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
 
-    const message = checkValidDAta(
-      isSignInForm ? null : name.current?.value,
-      email.current.value,
-      password.current.value
+    const errorMessage = checkValidDAta(
+      isSignInForm ? null : name,
+      email,
+      password
     );
-    seterrorMessage(message);
 
-    if (message) return;
-    // Sign In / Sign Up
+    if (errorMessage) {
+      setErrors({
+        name: errorMessage.includes("Name") ? errorMessage : "",
+        email: errorMessage.includes("Email") ? errorMessage : "",
+        password: errorMessage.includes("Password") ? errorMessage : "",
+      });
+      return;
+    }
+
     if (!isSignInForm) {
-      // sign up
-      createUserWithEmailAndPassword(
-        auth,
-        email.current.value,
-        password.current.value
-      )
+      // Sign Up
+      createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
           return updateProfile(user, {
-            displayName: name.current.value,
+            displayName: name,
             photoURL: USER_AVATAR,
           });
         })
         .then(() => {
           const { uid, email, displayName, photoURL } = auth.currentUser;
-          dispatch(
-            addUser({
-              uid: uid,
-              email: email,
-              displayName: displayName,
-              photoURL: photoURL,
-            })
-          );
+          dispatch(addUser({ uid, email, displayName, photoURL }));
         })
         .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          seterrorMessage(errorCode + "-" + errorMessage);
+          setErrors({ ...errors, email: error.message });
         });
     } else {
-      signInWithEmailAndPassword(
-        auth,
-        email.current.value,
-        password.current.value
-      )
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-        })
+      // Sign In
+      signInWithEmailAndPassword(auth, email, password)
+        .then(() => {})
         .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          seterrorMessage(errorCode + "-" + errorMessage);
+          setErrors({ ...errors, email: error.message });
         });
     }
   };
+
   return (
     <div>
       <Header />
       <div className="absolute">
         <div className="absolute inset-0 bg-black opacity-50"></div>
-        <img src={BG_URL} alt="background image" />
+        <img src={BG_URL} alt="background" />
       </div>
       <form
         onSubmit={(e) => e.preventDefault()}
-        className="w-md absolute p-12 bg-black/80 my-36 mx-auto right-0 left-0 text-white rounded-lg bg-opacity-50"
+        className="w-md absolute p-12 bg-black/80 my-36 mx-auto right-0 left-0 text-white rounded-lg"
       >
         <h1 className="font-bold text-3xl py-4">
           {isSignInForm ? "Sign In" : "Sign Up"}
         </h1>
         {!isSignInForm && (
-          <input
-            ref={name}
-            type="text"
-            placeholder="Enter Your Name"
-            className="p-4 my-4  w-full bg-gray-700 "
-          />
+          <div>
+            <input
+              ref={nameRef}
+              type="text"
+              placeholder="Enter Your Name"
+              className="p-4 my-2 w-full bg-gray-700"
+            />
+            {errors.name && (
+              <p className="text-red-500 text-sm">{errors.name}</p>
+            )}
+          </div>
         )}
-        <input
-          ref={email}
-          type="text"
-          placeholder="Email Address"
-          className="p-4 my-4 w-full bg-gray-700 "
-        />
-        <input
-          ref={password}
-          type="password"
-          placeholder="Password"
-          className="p-4 my-4  w-full bg-gray-700 "
-        />
-        <p className="text-red-400 font-bold text-lg py-2">{errorMessage}</p>
+        <div>
+          <input
+            ref={emailRef}
+            type="text"
+            placeholder="Email Address"
+            className="p-4 my-2 w-full bg-gray-700"
+          />
+          {errors.email && (
+            <p className="text-red-500 text-sm">{errors.email}</p>
+          )}
+        </div>
+        <div>
+          <input
+            ref={passwordRef}
+            type="password"
+            placeholder="Password"
+            className="p-4 my-2 w-full bg-gray-700"
+          />
+          {errors.password && (
+            <p className="text-red-500 text-sm">{errors.password}</p>
+          )}
+        </div>
         <button
           className="p-4 my-6 bg-red-700 w-full rounded-lg cursor-pointer"
           onClick={handleButtonClick}
