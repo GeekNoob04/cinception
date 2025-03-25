@@ -15,7 +15,7 @@ const VideoBackground = ({ movieId }) => {
 
   return (
     <div className="w-screen aspect-video overflow-hidden relative bg-black">
-      <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/20 to-transparent z-[1]"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-black/10 via-black/10 to-transparent z-[1]"></div>
       <iframe
         className="w-[200%] h-[200%] aspect-video absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
         src={embedUrl}

@@ -213,14 +213,17 @@ const GeminiMovieCard = ({ movie }) => {
       </div>
 
       <button
-        className="absolute top-2 right-2 bg-black bg-opacity-60 p-1 rounded-full text-white hover:bg-opacity-80 transition-opacity"
+        className="absolute top-2 right-2 p-2 rounded-full bg-white bg-opacity-20 backdrop-blur-lg shadow-lg 
+  hover:bg-opacity-40 hover:shadow-xl hover:scale-110 
+  active:scale-90 active:shadow-md 
+  transition-all duration-300 ease-in-out"
         onClick={handleFavoriteToggle}
         aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
       >
         {isFavorite ? (
-          <BsFillBookmarkCheckFill className="text-lg md:text-xl" />
+          <BsFillBookmarkCheckFill className="text-lg md:text-xl text-red-600 transition-colors duration-300" />
         ) : (
-          <BsBookmarkPlusFill className="text-lg md:text-xl" />
+          <BsBookmarkPlusFill className="text-lg md:text-xl text-gray-800 transition-colors duration-300" />
         )}
       </button>
 
