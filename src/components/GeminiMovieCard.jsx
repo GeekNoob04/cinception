@@ -104,7 +104,7 @@ const MovieModal = React.memo(
           >
             <button
               onClick={closeModal}
-              className="absolute top-4 right-4 text-white bg-red-600 rounded-full w-8 h-8 flex items-center justify-center hover:bg-red-700 transition-colors"
+              className="absolute top-4 right-4 text-white bg-red-600 rounded-full w-8 h-8 flex items-center justify-center hover:bg-red-700 transition-colors cursor-pointer"
               aria-label="Close modal"
             >
               &times;
