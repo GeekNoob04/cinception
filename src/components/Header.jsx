@@ -62,6 +62,7 @@ const Header = () => {
       <div className="absolute top-0 w-full z-50 bg-gradient-to-b from-black to-transparent flex justify-between items-center p-4 md:px-10 md:py-6">
         <div className="w-32 md:w-44 md:ml-4">
           <img
+            draggable="false"
             src={LOGO}
             className="w-full cursor-pointer"
             alt="Logo"
