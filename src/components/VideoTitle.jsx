@@ -10,7 +10,7 @@ const VideoTitle = ({ title, overview }) => {
         {overview}
       </p>
       <div className="flex flex-wrap mt-6">
-        <button className="bg-white text-black py-2 px-8 text-lg font-medium rounded-3xl flex items-center justify-center ">
+        <button className="bg-white text-black py-2 px-8 text-lg font-medium rounded-3xl flex items-center justify-center  cursor-pointer">
           <svg
             className="w-6 h-6 mr-1"
             viewBox="0 0 24 24"
@@ -21,7 +21,7 @@ const VideoTitle = ({ title, overview }) => {
           </svg>
           <span>Play</span>
         </button>
-        <button className="bg-gray-600/80 text-white py-2 px-8 text-lg font-medium rounded-3xl ml-4 flex items-center">
+        <button className="bg-gray-600/80 text-white py-2 px-8 text-lg font-medium rounded-3xl ml-4 flex items-center  cursor-pointer">
           <svg
             className="w-5 h-5 mr-2"
             viewBox="0 0 24 24"
