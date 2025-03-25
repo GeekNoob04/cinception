@@ -1,35 +1,37 @@
 import React from "react";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import Header from "./Header"; // Import the Header component
 import Login from "./Login";
 import Browse from "./Browse";
-import Favourites from "./Favourites"; // Import the Favourites component
-import { createBrowserRouter } from "react-router-dom";
-import { RouterProvider } from "react-router-dom";
+import Favourites from "./Favourites";
+import GptSearch from "./GptSearch";
 
-const Body = () => {
-  const appRouter = createBrowserRouter([
-    {
-      path: "/",
-      element: <Login />,
-    },
-    {
-      path: "/browse",
-      element: <Browse />,
-    },
-    {
-      path: "/favourites",
-      element: <Favourites />,
-    },
-    {
-      path: "*",
-      element: <Login />,
-    },
-  ]);
-
+// Define the layout inside Body.jsx
+const Layout = () => {
   return (
     <div>
-      <RouterProvider router={appRouter} />
+      <Header /> {/* Header will always be visible */}
+      <Outlet /> {/* This will render the current page component */}
     </div>
   );
+};
+
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />, // Wrap all routes inside Layout
+    children: [
+      { path: "/", element: <Login /> },
+      { path: "/browse", element: <Browse /> },
+      { path: "/search", element: <GptSearch /> },
+      { path: "/favourites", element: <Favourites /> },
+      { path: "*", element: <Login /> },
+    ],
+  },
+]);
+
+const Body = () => {
+  return <RouterProvider router={appRouter} />;
 };
 
 export default Body;
