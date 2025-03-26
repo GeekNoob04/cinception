@@ -74,8 +74,11 @@ const Header = () => {
 
         {user && (
           <>
-            {/* Mobile Hamburger Menu Icon */}
-            <div className="md:hidden">
+            {/* Mobile Header Right Section */}
+            <div className="flex items-center md:hidden">
+              <Link to="/search" className="mr-4">
+                <FaSearch className="text-white w-6 h-6" />
+              </Link>
               <GiHamburgerMenu
                 className="text-white w-8 h-8 cursor-pointer"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
