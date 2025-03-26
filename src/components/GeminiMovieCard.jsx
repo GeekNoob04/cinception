@@ -203,7 +203,7 @@ const GeminiMovieCard = ({ movie }) => {
           onClick={handleShowInfo}
           loading="lazy"
         />
-        <div className="p-1.5 sm:p-2 bg-neutral-900 bg-opacity-80 text-center">
+        <div className="p-1.5 sm:p-2 bg-gray-900/20 bg-opacity-80 text-center">
           <h3 className="text-white text-xs xs:text-sm sm:text-base font-medium truncate text-center">
             {movie?.title || movie?.name || "Movie Title"}
           </h3>
