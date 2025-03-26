@@ -197,9 +197,9 @@ const GeminiMovieCard = ({ movie }) => {
           onClick={handleShowInfo}
           loading="lazy"
         />
-        <div className="p-2 bg-gray-900 bg-opacity-80 text-center">
+        <div className="p-2 bg-neutral-900 bg-opacity-80 text-center">
           <h3 className="text-white text-sm md:text-base font-medium truncate text-center">
-            {movie?.title || "Movie Title"}
+            {movie?.title || movie?.name || "Movie Title"}
           </h3>
           {movie?.vote_average && (
             <div className="flex items-center justify-center mt-1">
