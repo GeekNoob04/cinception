@@ -6,11 +6,16 @@ import { motion } from "framer-motion";
 import { FaStar } from "react-icons/fa";
 import { BsBookmarkDashFill } from "react-icons/bs";
 import { createPortal } from "react-dom";
+import useMovieTrailer from "../hooks/useMovieTrailer";
 
 const Watchlist = () => {
   const dispatch = useDispatch();
   const Watchlist = useSelector((store) => store.Watchlist.Watchlist);
   const [selectedMovie, setSelectedMovie] = useState(null);
+
+  // Fetch trailer when modal opens
+  const trailerVideo = useSelector((store) => store.movies?.trailerVideo);
+  useMovieTrailer(selectedMovie?.id);
 
   const handleRemove = (movieId) => {
     dispatch(removeFav(movieId));
@@ -33,7 +38,7 @@ const Watchlist = () => {
           You haven't added any movies to your Watchlist yet.
         </p>
       ) : (
-        <div className="flex flex-wrap gap-6 justify-center">
+        <div className="flex flex-wrap gap-6 justify-start px-6">
           {Watchlist.map((movie) => (
             <div
               key={movie.id}
@@ -49,7 +54,7 @@ const Watchlist = () => {
                 />
                 <div className="p-2 bg-black bg-opacity-80 text-center">
                   <h3 className="text-white text-sm md:text-base font-medium truncate text-center">
-                    {movie.title || "Movie Title"}
+                    {movie.title || movie?.name || "Movie Title"}
                   </h3>
                   {movie.vote_average && (
                     <div className="flex items-center justify-center mt-1">
@@ -77,6 +82,7 @@ const Watchlist = () => {
         </div>
       )}
 
+      {/* Movie Info Modal */}
       {selectedMovie &&
         createPortal(
           <>
@@ -139,6 +145,20 @@ const Watchlist = () => {
                         Language:{" "}
                         {selectedMovie.original_language.toUpperCase()}
                       </p>
+                    )}
+
+                    {/* Watch Trailer Button (Only for Movies, Not TV Shows) */}
+                    {selectedMovie.title && trailerVideo?.key && (
+                      <div className="mt-8">
+                        <a
+                          href={`https://www.youtube.com/watch?v=${trailerVideo.key}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors"
+                        >
+                          Watch Trailer
+                        </a>
+                      </div>
                     )}
                   </div>
                 </div>

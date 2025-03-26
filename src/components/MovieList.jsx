@@ -11,14 +11,14 @@ const MovieList = ({ title, movies, isLoading, count = 6 }) => {
       </div>
 
       {isLoading ? (
-        <div className="flex overflow-x-auto pb-4 gap-4">
+        <div className="flex overflow-x-auto pb-4 gap-4 scrollbar-custom">
           {/* Display shimmer cards while loading */}
           {[...Array(count)].map((_, index) => (
             <MovieCardShimmer key={`shimmer-${index}`} />
           ))}
         </div>
       ) : movies && movies.length > 0 ? (
-        <div className="flex overflow-x-auto pb-4 gap-4">
+        <div className="flex overflow-x-auto pb-4 gap-4 scrollbar-custom">
           {movies.map((movie) => (
             <GeminiMovieCard
               key={movie.id || `movie-${movie.index}`}

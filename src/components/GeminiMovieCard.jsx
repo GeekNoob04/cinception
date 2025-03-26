@@ -55,7 +55,7 @@ const MovieDetails = React.memo(({ displayData, trailerVideo, isLoading }) => (
     )}
     <hr className="border-gray-400" />
     <div className="mt-8">
-      {trailerVideo?.key ? (
+      {displayData?.title && trailerVideo?.key ? (
         <a
           href={`https://www.youtube.com/watch?v=${trailerVideo.key}`}
           target="_blank"
@@ -65,7 +65,7 @@ const MovieDetails = React.memo(({ displayData, trailerVideo, isLoading }) => (
           Watch Trailer
         </a>
       ) : (
-        !isLoading && <p>No trailer available</p>
+        !isLoading && displayData?.title && <p>No trailer available</p>
       )}
     </div>
   </div>
