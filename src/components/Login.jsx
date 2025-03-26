@@ -11,9 +11,16 @@ import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { BG_URL, USER_AVATAR } from "../utils/constant";
 
+const LoadingSpinner = () => (
+  <div className="inline-block align-middle mr-2">
+    <div className="w-5 h-5 border-4 border-t-4 border-white border-t-transparent rounded-full animate-spin"></div>
+  </div>
+);
+
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errors, setErrors] = useState({ name: "", email: "", password: "" });
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -46,6 +53,8 @@ const Login = () => {
       return;
     }
 
+    setIsLoading(true);
+
     if (!isSignInForm) {
       // Sign Up
       createUserWithEmailAndPassword(auth, email, password)
@@ -62,6 +71,9 @@ const Login = () => {
         })
         .catch((error) => {
           setErrors({ ...errors, email: error.message });
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
     } else {
       // Sign In
@@ -69,20 +81,27 @@ const Login = () => {
         .then(() => {})
         .catch((error) => {
           setErrors({ ...errors, email: error.message });
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
     }
   };
 
   return (
-    <div>
+    <div className="relative min-h-screen">
       <Header />
-      <div className="absolute">
+      <div className="absolute inset-0">
         <div className="absolute inset-0 bg-black opacity-50"></div>
-        <img src={BG_URL} alt="background" />
+        <img
+          src={BG_URL}
+          alt="background"
+          className="w-full h-full object-cover"
+        />
       </div>
       <form
         onSubmit={(e) => e.preventDefault()}
-        className="w-md absolute p-12 bg-black/80 my-36 mx-auto right-0 left-0 text-white rounded-lg"
+        className="w-full max-w-md absolute p-12 bg-black/80 my-36 mx-auto right-0 left-0 text-white rounded-lg"
       >
         <h1 className="font-bold text-3xl py-4">
           {isSignInForm ? "Sign In" : "Sign Up"}
@@ -123,12 +142,25 @@ const Login = () => {
           )}
         </div>
         <button
-          className="p-4 my-6 bg-red-700 w-full rounded-lg cursor-pointer"
+          className="p-4 my-6 bg-red-700 w-full rounded-lg cursor-pointer hover:bg-red-800 transition-colors relative"
           onClick={handleButtonClick}
+          disabled={isLoading}
         >
-          {isSignInForm ? "Sign In" : "Sign Up"}
+          {isLoading ? (
+            <div className="flex items-center justify-center">
+              <LoadingSpinner />
+              <span>{isSignInForm ? "Signing In..." : "Signing Up..."}</span>
+            </div>
+          ) : isSignInForm ? (
+            "Sign In"
+          ) : (
+            "Sign Up"
+          )}
         </button>
-        <p className="py-4 cursor-pointer" onClick={toggleSignInForm}>
+        <p
+          className="py-4 cursor-pointer text-center hover:underline"
+          onClick={toggleSignInForm}
+        >
           {isSignInForm
             ? "New to CINCEPTION? Sign Up Now"
             : "Already a User? Sign In Now"}
