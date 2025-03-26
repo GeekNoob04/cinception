@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Header from "./Header";
 import { checkValidDAta } from "../utils/Validate";
 import {
@@ -21,17 +22,23 @@ const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errors, setErrors] = useState({ name: "", email: "", password: "" });
   const [isLoading, setIsLoading] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const dispatch = useDispatch();
 
   const toggleSignInForm = () => {
     setIsSignInForm(!isSignInForm);
     setErrors({ name: "", email: "", password: "" });
+    setIsPasswordVisible(false);
   };
 
   const nameRef = useRef(null);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
+
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
 
   const handleButtonClick = () => {
     const name = nameRef.current?.value;
@@ -130,13 +137,24 @@ const Login = () => {
             <p className="text-red-500 text-sm">{errors.email}</p>
           )}
         </div>
-        <div>
+        <div className="relative">
           <input
             ref={passwordRef}
-            type="password"
+            type={isPasswordVisible ? "text" : "password"}
             placeholder="Password"
-            className="p-4 my-2 w-full bg-gray-700"
+            className="p-4 my-2 w-full bg-gray-700 pr-12"
           />
+          <button
+            type="button"
+            onClick={togglePasswordVisibility}
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-900 focus:outline-none cursor-pointer"
+          >
+            {isPasswordVisible ? (
+              <FaEyeSlash className="h-5 w-5" />
+            ) : (
+              <FaEye className="h-5 w-5" />
+            )}
+          </button>
           {errors.password && (
             <p className="text-red-500 text-sm">{errors.password}</p>
           )}
