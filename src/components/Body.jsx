@@ -6,12 +6,14 @@ import Browse from "./Browse";
 import Watchlist from "./watchlist";
 import GptSearch from "./GptSearch";
 import ErrorPage from "./ErrorPage";
+import Footer from "./Footer";
 
 const Layout = () => {
   return (
     <div>
       <Header />
       <Outlet />
+      <Footer />
     </div>
   );
 };
