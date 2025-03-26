@@ -23,6 +23,7 @@ const Login = () => {
   const [errors, setErrors] = useState({ name: "", email: "", password: "" });
   const [isLoading, setIsLoading] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [passwordValue, setPasswordValue] = useState("");
 
   const dispatch = useDispatch();
 
@@ -30,6 +31,7 @@ const Login = () => {
     setIsSignInForm(!isSignInForm);
     setErrors({ name: "", email: "", password: "" });
     setIsPasswordVisible(false);
+    setPasswordValue("");
   };
 
   const nameRef = useRef(null);
@@ -38,6 +40,10 @@ const Login = () => {
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPasswordValue(e.target.value);
   };
 
   const handleButtonClick = () => {
@@ -142,19 +148,23 @@ const Login = () => {
             ref={passwordRef}
             type={isPasswordVisible ? "text" : "password"}
             placeholder="Password"
+            value={passwordValue}
+            onChange={handlePasswordChange}
             className="p-4 my-2 w-full bg-gray-700 pr-12"
           />
-          <button
-            type="button"
-            onClick={togglePasswordVisibility}
-            className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-900 focus:outline-none cursor-pointer"
-          >
-            {isPasswordVisible ? (
-              <FaEyeSlash className="h-5 w-5" />
-            ) : (
-              <FaEye className="h-5 w-5" />
-            )}
-          </button>
+          {passwordValue && (
+            <button
+              type="button"
+              onClick={togglePasswordVisibility}
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-900 focus:outline-none cursor-pointer"
+            >
+              {isPasswordVisible ? (
+                <FaEyeSlash className="h-5 w-5" />
+              ) : (
+                <FaEye className="h-5 w-5" />
+              )}
+            </button>
+          )}
           {errors.password && (
             <p className="text-red-500 text-sm">{errors.password}</p>
           )}
