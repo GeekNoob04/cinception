@@ -30,7 +30,7 @@ const Watchlist = () => {
   };
 
   return (
-    <div className="min-h-screen pt-20 pb-14 bg-gray-900 text-white">
+    <div className="min-h-screen pt-20 pb-14 bg-[#0a0a1a] text-white">
       <h1 className="text-2xl sm:text-3xl text-center mb-8 sm:mb-10">
         Watchlist
       </h1>

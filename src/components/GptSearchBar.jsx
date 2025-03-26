@@ -69,12 +69,12 @@ const GptSearchBar = () => {
   };
 
   return (
-    <div className="pt-20 md:pt-32 flex flex-col items-center">
-      <h1 className="text-3xl md:text-5xl font-bold mb-6 text-white text-center">
+    <div className="px-4 pt-20 md:pt-32 flex flex-col items-center">
+      <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-4 sm:mb-6 text-white text-center">
         Discover Your Next Favorite Movie
       </h1>
 
-      <p className="text-gray-300 text-center max-w-2xl mb-8 text-sm md:text-base">
+      <p className="text-gray-300 text-center max-w-2xl mb-6 sm:mb-8 text-xs sm:text-sm md:text-base px-4">
         Get AI-powered recommendations based on your movie preferences
       </p>
 
@@ -87,12 +87,12 @@ const GptSearchBar = () => {
             <input
               ref={searchText}
               type="text"
-              className="p-4 md:p-5 bg-gray-900 bg-opacity-80 flex-grow text-white placeholder-gray-400 focus:outline-none text-sm md:text-base"
+              className="p-3 sm:p-4 md:p-5 bg-gray-900 bg-opacity-80 flex-grow text-white placeholder-gray-400 focus:outline-none text-xs sm:text-sm md:text-base"
               placeholder="Search for movies or describe what you want to watch..."
               disabled={isLoading}
             />
             <button
-              className={`px-5 md:px-8 transition-all duration-300 flex items-center justify-center ${
+              className={`px-4 sm:px-5 md:px-8 transition-all duration-300 flex items-center justify-center ${
                 isLoading
                   ? "bg-gray-700 cursor-not-allowed"
                   : "bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800"
@@ -102,18 +102,18 @@ const GptSearchBar = () => {
             >
               {isLoading ? (
                 <div className="flex items-center justify-center">
-                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                  <span>Loading...</span>
+                  <div className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                  <span className="text-xs sm:text-sm">Loading...</span>
                 </div>
               ) : (
-                <span>Search</span>
+                <span className="text-xs sm:text-sm">Search</span>
               )}
             </button>
           </div>
         </div>
       </form>
 
-      <div className="mt-4 text-gray-400 text-xs md:text-sm text-center max-w-md">
+      <div className="mt-3 sm:mt-4 text-gray-400 text-xs sm:text-sm text-center max-w-md px-4">
         Try 'sci-fi with plot twists', 'heartwarming family films', or a
         specific movie title
       </div>
