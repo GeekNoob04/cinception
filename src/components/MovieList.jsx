@@ -4,25 +4,35 @@ import GeminiMovieCard from "./GeminiMovieCard";
 import MovieCardShimmer from "./MovieCardShimmer";
 
 const MovieList = ({ title, movies, isLoading, count = 6 }) => {
+  const isMobile = window.innerWidth <= 768;
+
+  const TitleComponent = isMobile ? "h1" : motion.h1;
+
+  const titleProps = isMobile
+    ? {}
+    : {
+        initial: { opacity: 0, x: -100 },
+        whileInView: {
+          opacity: 1,
+          x: 0,
+          transition: {
+            duration: 0.6,
+            ease: "easeOut",
+          },
+        },
+        viewport: { once: true, amount: 0.1 },
+      };
+
   return (
     <div className="px-4 md:px-6 mb-12">
       <div className="flex items-center mb-6 overflow-hidden">
         <div className="w-1 h-8 bg-red-600 mr-4"></div>
-        <motion.h1 
-          initial={{ opacity: 0, x: -100 }}
-          whileInView={{ 
-            opacity: 1, 
-            x: 0,
-            transition: {
-              duration: 0.6,
-              ease: "easeOut"
-            }
-          }}
-          viewport={{ once: true, amount: 0.1 }}
+        <TitleComponent
+          {...titleProps}
           className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white"
         >
           {title}
-        </motion.h1>
+        </TitleComponent>
       </div>
 
       {isLoading ? (
