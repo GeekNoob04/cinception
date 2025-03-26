@@ -160,69 +160,78 @@ const Header = () => {
         <div
           className={`fixed z-50 bg-black h-screen w-full top-0 transition-transform duration-300 transform ${
             isMenuOpen ? "translate-x-0" : "translate-x-full"
-          }`}
+          } flex flex-col items-center justify-center`}
         >
           <div className="absolute top-0 left-0 z-[-2] h-full w-full bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
-          <div className="flex justify-end p-4">
+
+          {/* Close Button */}
+          <div className="absolute top-6 right-6">
             <IoMdClose
-              className="text-white w-8 h-8 cursor-pointer"
+              className="text-white w-10 h-10 cursor-pointer"
               onClick={() => setIsMenuOpen(false)}
             />
           </div>
-          <div className="flex flex-col items-end pr-4 pt-8 space-y-8">
+
+          {/* Menu Items */}
+          <div className="flex flex-col items-center space-y-10 text-center">
             <Link to="/browse" onClick={() => setIsMenuOpen(false)}>
               <span
-                className="border-b-2 border-red-600 pb-1 text-white text-xl hover:text-red-600 transition duration-300 cursor-pointer"
+                className="border-b-4 border-red-600 pb-2 text-white text-3xl font-bold hover:text-red-600 transition duration-300 cursor-pointer"
                 onClick={navigateToBrowse}
               >
                 Home
               </span>
             </Link>
+
             <Link to="/search" onClick={() => setIsMenuOpen(false)}>
-              <span className="border-b-2 border-red-600 pb-1 text-white text-xl hover:text-red-600 transition duration-300 cursor-pointer">
+              <span className="border-b-4 border-red-600 pb-2 text-white text-3xl font-bold hover:text-red-600 transition duration-300 cursor-pointer">
                 AI Search
               </span>
             </Link>
+
             <Link to="/watchlist" onClick={() => setIsMenuOpen(false)}>
-              <span className="border-b-2 border-red-600 pb-1 text-white text-xl hover:text-red-600 transition duration-300 cursor-pointer">
+              <span className="border-b-4 border-red-600 pb-2 text-white text-3xl font-bold hover:text-red-600 transition duration-300 cursor-pointer">
                 Watchlist
               </span>
             </Link>
+
             <span
               onClick={() => {
                 handleSignOut();
                 setIsMenuOpen(false);
               }}
-              className="border-b-2 border-red-600 pb-1 text-white text-xl hover:text-red-600 transition duration-300 cursor-pointer"
+              className="border-b-4 border-red-600 pb-2 text-white text-3xl font-bold hover:text-red-600 transition duration-300 cursor-pointer"
             >
               Sign Out
             </span>
-            <div className="flex justify-around w-[35%] text-3xl">
-              <a
-                href="https://x.com/BudhrajaHarshit"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white"
-              >
-                <FaXTwitter />
-              </a>
-              <a
-                href="https://www.linkedin.com/in/harshit-budhraja-621a70251/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-500"
-              >
-                <FaLinkedin />
-              </a>
-              <a
-                href="https://www.instagram.com/harshitisdelusional/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-pink-500"
-              >
-                <FaInstagram />
-              </a>
-            </div>
+          </div>
+
+          {/* Social Links */}
+          <div className="flex justify-center space-x-6 mt-16 text-4xl">
+            <a
+              href="https://x.com/BudhrajaHarshit"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-gray-300 transition duration-300"
+            >
+              <FaXTwitter />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/harshit-budhraja-621a70251/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 hover:text-blue-400 transition duration-300"
+            >
+              <FaLinkedin />
+            </a>
+            <a
+              href="https://www.instagram.com/harshitisdelusional/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-pink-500 hover:text-pink-400 transition duration-300"
+            >
+              <FaInstagram />
+            </a>
           </div>
         </div>
       )}
