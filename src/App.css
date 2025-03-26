@@ -5,56 +5,48 @@
 }
 
 .scrollbar-hide {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
-/* Custom Scrollbar */
-/* Custom Scrollbar */
+
 .scrollbar-custom::-webkit-scrollbar {
-  width: 8px; /* Vertical scrollbar width */
-  height: 8px; /* Horizontal scrollbar height */
-  display: block; /* Force visibility */
+  width: 8px;
+  height: 8px;
+  display: block;
 }
 
 .scrollbar-custom::-webkit-scrollbar-track {
-  background: #1f1f1f; /* Dark background for the track */
+  background: #1f1f1f;
   border-radius: 10px;
 }
 
 .scrollbar-custom::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, #ff4e50, #f9d423); /* Gradient effect */
+  background: linear-gradient(45deg, #ff4e50, #f9d423);
   border-radius: 10px;
   transition: background 0.3s ease-in-out;
 }
 
 .scrollbar-custom::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(
-    45deg,
-    #ff6a00,
-    #ee0979
-  ); /* Change color on hover */
+  background: linear-gradient(45deg, #ff6a00, #ee0979);
 }
-
-/* Enable smooth scrolling on iOS */
 .scrollbar-custom {
-  scrollbar-width: thin; /* Firefox */
-  scrollbar-color: #ca1a1d #1f1f1f; /* Thumb and track color */
-  -webkit-overflow-scrolling: auto !important; /* Force auto instead of touch */
-  scroll-behavior: smooth !important; /* Ensure smooth scrolling */
-  overflow-x: scroll !important; /* Force horizontal scroll visibility */
+  scrollbar-width: thin;
+  scrollbar-color: #ca1a1d #1f1f1f;
+  -webkit-overflow-scrolling: auto !important;
+  scroll-behavior: smooth !important;
+  overflow-x: scroll !important;
 }
 
-/* iPhone Fix: Ensure Scrollbar Always Visible */
 @media (max-width: 768px) {
   .scrollbar-custom {
-    -webkit-overflow-scrolling: auto !important; /* Ensures smooth native scrolling */
-    overflow-x: scroll !important; /* Forces horizontal scroll visibility */
-    position: relative; /* Helps with visibility */
+    -webkit-overflow-scrolling: auto !important;
+    overflow-x: scroll !important;
+    position: relative;
   }
 
   .scrollbar-custom::-webkit-scrollbar {
-    height: 6px; /* Slightly smaller scrollbar for mobile */
-    display: block !important; /* Forces scrollbar to show */
+    height: 6px;
+    display: block !important;
   }
 
   .scrollbar-custom::-webkit-scrollbar-thumb {

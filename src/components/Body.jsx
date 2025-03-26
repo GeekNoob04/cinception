@@ -1,18 +1,17 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import Header from "./Header"; // Import the Header component
+import Header from "./Header";
 import Login from "./Login";
 import Browse from "./Browse";
 import Watchlist from "./watchlist";
 import GptSearch from "./GptSearch";
 import ErrorPage from "./ErrorPage";
 
-// Define the layout inside Body.jsx
 const Layout = () => {
   return (
     <div>
-      <Header /> {/* Header will always be visible */}
-      <Outlet /> {/* This will render the current page component */}
+      <Header />
+      <Outlet />
     </div>
   );
 };
@@ -20,7 +19,7 @@ const Layout = () => {
 const appRouter = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />, // Wrap all routes inside Layout
+    element: <Layout />,
     children: [
       { path: "/", element: <Login /> },
       { path: "/browse", element: <Browse /> },

@@ -8,7 +8,6 @@ import { FaStar } from "react-icons/fa";
 import { BsBookmarkPlusFill, BsFillBookmarkCheckFill } from "react-icons/bs";
 import useMovieTrailer from "../hooks/useMovieTrailer";
 
-// LoadingPlaceholder component
 const LoadingPlaceholder = React.memo(() => (
   <>
     <div className="h-8 bg-gray-300 rounded w-3/4 mb-4 animate-pulse"></div>
@@ -20,7 +19,6 @@ const LoadingPlaceholder = React.memo(() => (
   </>
 ));
 
-// MovieDetails component
 const MovieDetails = React.memo(({ displayData, trailerVideo, isLoading }) => (
   <div className="text-white px-2 sm:px-0">
     <h1 className="text-xl sm:text-2xl md:text-4xl my-2 font-semibold">
@@ -74,7 +72,6 @@ const MovieDetails = React.memo(({ displayData, trailerVideo, isLoading }) => (
   </div>
 ));
 
-// MovieModal component
 const MovieModal = React.memo(
   ({
     showInfoModal,
@@ -88,7 +85,6 @@ const MovieModal = React.memo(
 
     return createPortal(
       <>
-        {/* Dark Background Overlay */}
         <div
           onClick={closeModal}
           className="fixed inset-0 bg-black opacity-80 z-[10000]"

@@ -5,7 +5,6 @@ import MovieList from "./MovieList";
 const GptMovieSuggestions = () => {
   const { movieResults, isLoading } = useSelector((store) => store.gemini);
 
-  // Don't render anything if there's no data and we're not loading
   if (!isLoading && (!movieResults || movieResults.length === 0)) return null;
 
   return (

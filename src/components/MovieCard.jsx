@@ -8,7 +8,6 @@ import { useSelector, useDispatch } from "react-redux";
 import useMovieTrailer from "../hooks/useMovieTrailer";
 import { addFavorite, removeFavorite } from "../utils/favoritesSlice";
 
-// Extracted components for better organization
 const LoadingPlaceholder = memo(() => (
   <>
     <div className="h-8 bg-gray-200 rounded w-3/4 mb-4 animate-pulse"></div>
@@ -70,7 +69,6 @@ const MovieDetails = memo(({ displayData, trailerVideo, isLoading }) => (
   </>
 ));
 
-// Modal component extracted for better separation of concerns
 const MovieModal = memo(
   ({
     showInfoModal,
@@ -146,7 +144,6 @@ const MovieModal = memo(
   }
 );
 
-// Add display names to all memo components
 LoadingPlaceholder.displayName = "LoadingPlaceholder";
 MovieDetails.displayName = "MovieDetails";
 MovieModal.displayName = "MovieModal";
@@ -156,7 +153,6 @@ const MovieCard = memo(({ posterPath, movieData }) => {
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Get favorites from Redux store
   const favorites = useSelector((store) => store.favorites?.items || []);
 
   // Check if this movie is in favorites
@@ -165,32 +161,26 @@ const MovieCard = memo(({ posterPath, movieData }) => {
     [favorites, movieData?.id]
   );
 
-  // Get trailer video and movie details from Redux store
   const trailerVideo = useSelector((store) => store.movies?.trailerVideo);
   const movieDetails = useSelector((store) => store.movies?.movieDetails);
 
   // Use the hook conditionally with the movie ID
   useMovieTrailer(showInfoModal && movieData?.id ? movieData.id : null);
 
-  // Use the combined data - prefer Redux state for detailed view but fallback to props
   const displayData = useMemo(
     () => (showInfoModal && movieDetails ? movieDetails : movieData),
     [showInfoModal, movieDetails, movieData]
   );
 
-  // Early return if no poster
   if (!posterPath) return null;
 
-  // Memoize event handlers to prevent unnecessary re-renders
   const handleFavoriteToggle = useCallback(
     (e) => {
       e.stopPropagation();
 
-      // If already in favorites, remove it
       if (isFavorite) {
         dispatch(removeFavorite(movieData.id));
       } else {
-        // Add to favorites - ensure all needed data is included
         dispatch(
           addFavorite({
             id: movieData.id,
@@ -210,7 +200,7 @@ const MovieCard = memo(({ posterPath, movieData }) => {
   const handleShowInfo = useCallback(() => {
     setIsLoading(true);
     setShowInfoModal(true);
-    // Set loading to false after a short delay to allow for the API call
+
     setTimeout(() => setIsLoading(false), 1000);
   }, []);
 

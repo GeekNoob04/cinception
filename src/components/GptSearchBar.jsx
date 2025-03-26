@@ -22,10 +22,8 @@ const GptSearchBar = () => {
     dispatch(setGeminiLoading(true));
 
     try {
-      // Generate the appropriate prompt based on query type
       const prompt = generateGeminiPrompt(query);
 
-      // Get recommendations from Gemini AI
       const response = await geminiUtils.generateContent(prompt);
       const formattedResponse = [
         {
@@ -35,10 +33,8 @@ const GptSearchBar = () => {
 
       const contentText = formattedResponse[0]?.message?.content || "";
 
-      // Process the response to get movie titles
       const limitedMovies = processGeminiResponse(contentText);
 
-      // Search for each movie in TMDB
       const initialResultsPromises = limitedMovies.map((movie) =>
         searchMovieWithFallback(movie)
       );
@@ -48,7 +44,6 @@ const GptSearchBar = () => {
         (result) => result !== null
       );
 
-      // Get detailed information for each found movie
       const detailedResultsPromises = validInitialResults.map((movie) =>
         getMovieDetails(movie.id)
       );
@@ -58,7 +53,6 @@ const GptSearchBar = () => {
         (movie) => movie !== null
       );
 
-      // Update Redux store with results
       dispatch(
         addGeminiMovieResult({
           movieNames: limitedMovies,

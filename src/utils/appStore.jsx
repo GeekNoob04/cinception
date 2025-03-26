@@ -6,14 +6,14 @@ import userReducer from "./userSlice";
 import moviesReducer from "./moviesSlice";
 import gptReducer from "./gptSlice";
 import configReducer from "./configSlice";
-import WatchlistReducer from "./favoritesSlice"; // Ensure the correct file name is used
+import WatchlistReducer from "./favoritesSlice";
 
 const rootReducer = combineReducers({
   user: userReducer,
   movies: moviesReducer,
   gemini: gptReducer,
   config: configReducer,
-  Watchlist: WatchlistReducer, // Use correct reducer key
+  Watchlist: WatchlistReducer,
 });
 
 const isClient = typeof window !== "undefined";
@@ -21,7 +21,7 @@ const isClient = typeof window !== "undefined";
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["gemini"], // Exclude unnecessary persistence
+  blacklist: ["gemini"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -35,7 +35,7 @@ const makeStore = () => {
           ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
         },
       }),
-    devTools: process.env.NODE_ENV !== "production", // Ensure Redux DevTools work
+    devTools: process.env.NODE_ENV !== "production",
   });
 
   if (isClient) {
