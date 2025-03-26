@@ -102,15 +102,18 @@ const MovieModal = React.memo(
           onClick={closeModal}
         >
           <div
-            className="w-full max-w-[85vw] sm:w-[85vw] md:w-[70vw] h-[90vh] md:h-auto bg-neutral-900 text-white p-4 sm:p-8 rounded-lg relative overflow-y-auto"
+            className="w-full max-w-[85vw] sm:w-[85vw] md:w-[70vw] 
+            max-h-[90vh]  // Ensures content doesn't overflow
+            max-sm:max-h-[70vh]  // Slightly shorter on very small screens
+            bg-neutral-900 text-white p-4 sm:p-8 rounded-lg relative overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={closeModal}
-              className="absolute top-2 right-2 sm:top-4 sm:right-4 text-white bg-red-600 rounded-full w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-red-700 transition-colors cursor-pointer text-sm sm:text-base"
+              className="absolute top-2 right-2 sm:top-4 sm:right-4 text-white bg-red-600 rounded-full w-8 h-8 flex items-center justify-center hover:bg-red-700 transition-colors cursor-pointer text-lg"
               aria-label="Close modal"
             >
-              &times;
+              ×
             </button>
             <div className="flex flex-col md:flex-row">
               <div className="w-full md:w-[37%] h-auto rounded-2xl mb-4 md:mb-0">
