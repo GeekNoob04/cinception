@@ -22,50 +22,53 @@ const LoadingPlaceholder = React.memo(() => (
 
 // MovieDetails component
 const MovieDetails = React.memo(({ displayData, trailerVideo, isLoading }) => (
-  <div className="text-white">
-    <h1 className="text-2xl md:text-4xl my-2 font-semibold">
+  <div className="text-white px-2 sm:px-0">
+    <h1 className="text-xl sm:text-2xl md:text-4xl my-2 font-semibold">
       {displayData?.title || displayData?.name || "Movie Title"}
     </h1>
-    <p className="text-gray-300 text-sm my-1">
+    <p className="text-gray-300 text-xs sm:text-sm my-1">
       Release Date:{" "}
       {displayData?.release_date || displayData?.first_air_date || "N/A"}
     </p>
-    <p className="my-4">
+    <p className="my-2 sm:my-4 text-sm sm:text-base">
       {displayData?.overview || "No description available."}
     </p>
     {displayData?.vote_average && (
-      <p className="my-4 flex items-center">
+      <p className="my-2 sm:my-4 flex items-center text-sm sm:text-base">
         Rating: <FaStar className="text-yellow-500 ml-2 mr-1" />
         {Math.round(displayData.vote_average * 10) / 10}/10
       </p>
     )}
     <hr className="border-gray-400" />
     {displayData?.original_language && (
-      <p className="py-4">
+      <p className="py-2 sm:py-4 text-sm sm:text-base">
         Language: {displayData.original_language.toUpperCase()}
       </p>
     )}
     {displayData?.genres && displayData.genres.length > 0 && (
       <>
         <hr className="border-gray-400" />
-        <p className="py-4">
+        <p className="py-2 sm:py-4 text-sm sm:text-base">
           Genres: {displayData.genres.map((genre) => genre.name).join(", ")}
         </p>
       </>
     )}
     <hr className="border-gray-400" />
-    <div className="mt-8">
+    <div className="mt-4 sm:mt-8">
       {displayData?.title && trailerVideo?.key ? (
         <a
           href={`https://www.youtube.com/watch?v=${trailerVideo.key}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors"
+          className="bg-red-600 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-md text-sm sm:text-base hover:bg-red-700 transition-colors"
         >
           Watch Trailer
         </a>
       ) : (
-        !isLoading && displayData?.title && <p>No trailer available</p>
+        !isLoading &&
+        displayData?.title && (
+          <p className="text-sm sm:text-base">No trailer available</p>
+        )
       )}
     </div>
   </div>
@@ -95,16 +98,16 @@ const MovieModal = React.memo(
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.3 }}
-          className="fixed inset-0 flex items-center justify-center z-[10001]"
+          className="fixed inset-0 flex items-center justify-center z-[10001] px-2 sm:px-0"
           onClick={closeModal}
         >
           <div
-            className="w-[85vw] md:w-[70vw] h-[90vh] md:h-auto bg-neutral-900 text-white p-8 rounded-lg relative overflow-y-auto"
+            className="w-full max-w-[85vw] sm:w-[85vw] md:w-[70vw] h-[90vh] md:h-auto bg-neutral-900 text-white p-4 sm:p-8 rounded-lg relative overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={closeModal}
-              className="absolute top-4 right-4 text-white bg-red-600 rounded-full w-8 h-8 flex items-center justify-center hover:bg-red-700 transition-colors cursor-pointer"
+              className="absolute top-2 right-2 sm:top-4 sm:right-4 text-white bg-red-600 rounded-full w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-red-700 transition-colors cursor-pointer text-sm sm:text-base"
               aria-label="Close modal"
             >
               &times;
@@ -188,23 +191,23 @@ const GeminiMovieCard = ({ movie }) => {
   }, []);
 
   return (
-    <div className="relative w-36 md:w-44 lg:w-56 flex-shrink-0 mb-4">
+    <div className="relative w-28 xs:w-36 sm:w-44 md:w-44 lg:w-56 flex-shrink-0 mb-4">
       <div className="w-full overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
         <img
           src={IMG_CDN_URL + posterPath}
           alt={movie?.title || "Movie Card"}
-          className="w-full h-52 md:h-64 lg:h-80 object-cover cursor-pointer hover:scale-105 transition-transform duration-300"
+          className="w-full h-44 xs:h-52 sm:h-52 md:h-64 lg:h-80 object-cover cursor-pointer hover:scale-105 transition-transform duration-300"
           onClick={handleShowInfo}
           loading="lazy"
         />
-        <div className="p-2 bg-neutral-900 bg-opacity-80 text-center">
-          <h3 className="text-white text-sm md:text-base font-medium truncate text-center">
+        <div className="p-1.5 sm:p-2 bg-neutral-900 bg-opacity-80 text-center">
+          <h3 className="text-white text-xs xs:text-sm sm:text-base font-medium truncate text-center">
             {movie?.title || movie?.name || "Movie Title"}
           </h3>
           {movie?.vote_average && (
-            <div className="flex items-center justify-center mt-1">
-              <FaStar className="text-yellow-500 mr-1 text-xs md:text-sm" />
-              <span className="text-white text-xs md:text-sm">
+            <div className="flex items-center justify-center mt-0.5 sm:mt-1">
+              <FaStar className="text-yellow-500 mr-1 text-[10px] xs:text-xs sm:text-sm" />
+              <span className="text-white text-[10px] xs:text-xs sm:text-sm">
                 {Math.round(movie.vote_average * 10) / 10}
               </span>
             </div>
@@ -213,17 +216,17 @@ const GeminiMovieCard = ({ movie }) => {
       </div>
 
       <button
-        className="absolute top-2 right-2 p-2 rounded-full bg-white bg-opacity-20 backdrop-blur-lg shadow-lg 
-  hover:bg-opacity-40 hover:shadow-xl hover:scale-110 
-  active:scale-90 active:shadow-md 
-  transition-all duration-300 ease-in-out"
+        className="absolute top-1 right-1 sm:top-2 sm:right-2 p-1 sm:p-2 rounded-full bg-white bg-opacity-20 backdrop-blur-lg shadow-lg 
+        hover:bg-opacity-40 hover:shadow-xl hover:scale-110 
+        active:scale-90 active:shadow-md 
+        transition-all duration-300 ease-in-out"
         onClick={handleFavoriteToggle}
         aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
       >
         {isFavorite ? (
-          <BsFillBookmarkCheckFill className="text-lg md:text-xl text-red-600 transition-colors duration-300" />
+          <BsFillBookmarkCheckFill className="text-sm sm:text-lg md:text-xl text-red-600 transition-colors duration-300" />
         ) : (
-          <BsBookmarkPlusFill className="text-lg md:text-xl text-gray-800 transition-colors duration-300" />
+          <BsBookmarkPlusFill className="text-sm sm:text-lg md:text-xl text-gray-800 transition-colors duration-300" />
         )}
       </button>
 

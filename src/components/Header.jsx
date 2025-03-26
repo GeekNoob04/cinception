@@ -74,6 +74,7 @@ const Header = () => {
 
         {user && (
           <>
+            {/* Mobile Hamburger Menu Icon */}
             <div className="md:hidden">
               <GiHamburgerMenu
                 className="text-white w-8 h-8 cursor-pointer"
@@ -81,6 +82,7 @@ const Header = () => {
               />
             </div>
 
+            {/* Desktop Menu */}
             <div className="hidden md:flex md:items-center md:space-x-6 md:ml-auto">
               <Link to="/browse">
                 <button
@@ -101,7 +103,6 @@ const Header = () => {
                 </button>
               </Link>
 
-              {/* AI Search Button - No toggling, direct navigation */}
               <Link to="/search">
                 <button className="text-white font-medium relative group px-2 py-1 flex items-center">
                   <FaSearch className="mr-2 w-4 h-4 align-middle" />
@@ -153,6 +154,78 @@ const Header = () => {
           </>
         )}
       </div>
+
+      {/* Mobile Menu */}
+      {user && (
+        <div
+          className={`fixed z-50 bg-black h-screen w-full top-0 transition-transform duration-300 transform ${
+            isMenuOpen ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          <div className="absolute top-0 left-0 z-[-2] h-full w-full bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
+          <div className="flex justify-end p-4">
+            <IoMdClose
+              className="text-white w-8 h-8 cursor-pointer"
+              onClick={() => setIsMenuOpen(false)}
+            />
+          </div>
+          <div className="flex flex-col items-end pr-4 pt-8 space-y-8">
+            <Link to="/browse" onClick={() => setIsMenuOpen(false)}>
+              <span
+                className="border-b-2 border-red-600 pb-1 text-white text-xl hover:text-red-600 transition duration-300 cursor-pointer"
+                onClick={navigateToBrowse}
+              >
+                Home
+              </span>
+            </Link>
+            <Link to="/search" onClick={() => setIsMenuOpen(false)}>
+              <span className="border-b-2 border-red-600 pb-1 text-white text-xl hover:text-red-600 transition duration-300 cursor-pointer">
+                AI Search
+              </span>
+            </Link>
+            <Link to="/watchlist" onClick={() => setIsMenuOpen(false)}>
+              <span className="border-b-2 border-red-600 pb-1 text-white text-xl hover:text-red-600 transition duration-300 cursor-pointer">
+                Watchlist
+              </span>
+            </Link>
+            <span
+              onClick={() => {
+                handleSignOut();
+                setIsMenuOpen(false);
+              }}
+              className="border-b-2 border-red-600 pb-1 text-white text-xl hover:text-red-600 transition duration-300 cursor-pointer"
+            >
+              Sign Out
+            </span>
+            <div className="flex justify-around w-[35%] text-3xl">
+              <a
+                href="https://x.com/BudhrajaHarshit"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white"
+              >
+                <FaXTwitter />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/harshit-budhraja-621a70251/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500"
+              >
+                <FaLinkedin />
+              </a>
+              <a
+                href="https://www.instagram.com/harshitisdelusional/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-pink-500"
+              >
+                <FaInstagram />
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
