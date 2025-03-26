@@ -118,11 +118,11 @@ const generateGeminiPrompt = (query) => {
 
   if (isLikelyMovieTitle) {
     return `Act as a movie recommendation system. The user is looking for movies similar to "${query}".
-      Suggest exactly 10 movies that are similar in theme, style, plot, or director to "${query}".
+      Suggest exactly 20 movies that are similar in theme, style, plot, or director to "${query}".
       Include "${query}" as the first movie in your list if it's a valid movie title.
       Only return a comma-separated list of movie titles with no additional text or explanation.`;
   } else {
-    return `Act as a movie recommendation system and suggest exactly 10 movies that are genuinely ${query}. 
+    return `Act as a movie recommendation system and suggest exactly 20 movies that are genuinely ${query}. 
       Consider the thematic elements, tone, and genre. For example, if someone asks for "dark movies", 
       recommend movies that are actually dark in theme or tone (like "Taxi Driver", "Se7en", "Requiem for a Dream"), 
       not just movies with "dark" in the title. 
@@ -141,7 +141,7 @@ const processGeminiResponse = (contentText) => {
     .map((movie) => movie.trim())
     .filter((movie) => movie.length > 0);
 
-  return geminiMovies.slice(0, 10);
+  return geminiMovies.slice(0, 20);
 };
 
 export {
