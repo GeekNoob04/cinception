@@ -16,6 +16,19 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const user = useSelector((store) => store.user);
+  
+  const handleLogoClick = () => {
+    // If user is logged in and not already on /browse, navigate to /browse
+    if (user && location.pathname !== "/browse") {
+      navigate("/browse");
+    } else if (user) {
+      // If user is already on /browse, reload the page
+      window.location.reload();
+    } else {
+      // If no user, navigate to home
+      navigate("/");
+    }
+  };
 
   const handleSignOut = () => {
     signOut(auth)
@@ -66,9 +79,7 @@ const Header = () => {
             src={LOGO}
             className="w-full cursor-pointer"
             alt="Logo"
-            onClick={() => {
-              user ? window.location.reload() : navigate("/");
-            }}
+            onClick={handleLogoClick}
           />
         </div>
 
