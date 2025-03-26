@@ -189,9 +189,10 @@ const Login = () => {
           className="py-4 cursor-pointer text-center hover:underline"
           onClick={toggleSignInForm}
         >
-          {isSignInForm
-            ? "New to CINCEPTION? Sign Up Now"
-            : "Already a User? Sign In Now"}
+          {isSignInForm ? "New to CINCEPTION? " : "Already a User? "}
+          <span className="font-bold">
+            {isSignInForm ? "Sign Up Now" : "Sign In Now"}
+          </span>
         </p>
       </form>
     </div>
