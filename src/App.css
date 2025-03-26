@@ -8,9 +8,10 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+/* Custom Scrollbar */
 .scrollbar-custom::-webkit-scrollbar {
-  width: 8px; /* Set scrollbar width */
-  height: 8px; /* For horizontal scrollbars */
+  width: 8px; /* Vertical scrollbar width */
+  height: 8px; /* Horizontal scrollbar height */
 }
 
 .scrollbar-custom::-webkit-scrollbar-track {
@@ -32,7 +33,27 @@
   ); /* Change color on hover */
 }
 
+/* Firefox Scrollbar */
 .scrollbar-custom {
   scrollbar-width: thin; /* Firefox scrollbar width */
   scrollbar-color: #ca1a1d #1f1f1f; /* Thumb and track color */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  scroll-behavior: smooth; /* Smooth scrolling on all devices */
+}
+
+/* Ensure Scrollbar is Visible on Mobile */
+@media (max-width: 768px) {
+  .scrollbar-custom {
+    overflow-x: auto;
+    -ms-overflow-style: auto; /* Ensures scrollbar is visible on IE/Edge */
+    scrollbar-width: thin; /* Firefox */
+  }
+
+  .scrollbar-custom::-webkit-scrollbar {
+    height: 6px; /* Slightly smaller scrollbar for mobile */
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, #ff4e50, #f9d423);
+  }
 }
