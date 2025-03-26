@@ -125,6 +125,7 @@ const MovieModal = React.memo(
                     alt={displayData?.title || "Movie poster"}
                     className="w-full h-72 md:h-full rounded-lg object-cover"
                     loading="lazy"
+                    draggable="false"
                   />
                 )}
               </div>
@@ -198,6 +199,7 @@ const GeminiMovieCard = ({ movie }) => {
           className="w-full h-44 xs:h-52 sm:h-52 md:h-64 lg:h-80 object-cover cursor-pointer hover:scale-105 transition-transform duration-300"
           onClick={handleShowInfo}
           loading="lazy"
+          draggable="false"
         />
         <div className="p-1.5 sm:p-2 bg-gray-900/20 bg-opacity-80 text-center">
           <h3 className="text-white text-xs xs:text-sm sm:text-base font-medium truncate text-center">

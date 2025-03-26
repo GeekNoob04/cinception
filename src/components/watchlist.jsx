@@ -53,6 +53,7 @@ const Watchlist = () => {
                   className="w-full h-44 xs:h-52 sm:h-52 md:h-64 lg:h-80 object-cover cursor-pointer hover:scale-105 transition-transform duration-300"
                   onClick={() => openInfoModal(movie)}
                   loading="lazy"
+                  draggable="false"
                 />
                 <div className="p-1.5 sm:p-2 bg-black bg-opacity-80 text-center">
                   <h3 className="text-white text-xs xs:text-sm sm:text-base font-medium truncate text-center">
@@ -121,6 +122,7 @@ const Watchlist = () => {
                       alt={selectedMovie.title || "Movie poster"}
                       className="w-full h-72 md:h-full rounded-lg object-cover"
                       loading="lazy"
+                      draggable="false"
                     />
                   </div>
                   <div className="md:w-2/3 md:ml-8">
