@@ -9,9 +9,11 @@
   scrollbar-width: none; /* Firefox */
 }
 /* Custom Scrollbar */
+/* Custom Scrollbar */
 .scrollbar-custom::-webkit-scrollbar {
   width: 8px; /* Vertical scrollbar width */
   height: 8px; /* Horizontal scrollbar height */
+  display: block; /* Force visibility */
 }
 
 .scrollbar-custom::-webkit-scrollbar-track {
@@ -33,24 +35,26 @@
   ); /* Change color on hover */
 }
 
-/* Firefox Scrollbar */
+/* Enable smooth scrolling on iOS */
 .scrollbar-custom {
-  scrollbar-width: thin; /* Firefox scrollbar width */
+  scrollbar-width: thin; /* Firefox */
   scrollbar-color: #ca1a1d #1f1f1f; /* Thumb and track color */
-  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-  scroll-behavior: smooth; /* Smooth scrolling on all devices */
+  -webkit-overflow-scrolling: auto !important; /* Force auto instead of touch */
+  scroll-behavior: smooth !important; /* Ensure smooth scrolling */
+  overflow-x: scroll !important; /* Force horizontal scroll visibility */
 }
 
-/* Ensure Scrollbar is Visible on Mobile */
+/* iPhone Fix: Ensure Scrollbar Always Visible */
 @media (max-width: 768px) {
   .scrollbar-custom {
-    overflow-x: auto;
-    -ms-overflow-style: auto; /* Ensures scrollbar is visible on IE/Edge */
-    scrollbar-width: thin; /* Firefox */
+    -webkit-overflow-scrolling: auto !important; /* Ensures smooth native scrolling */
+    overflow-x: scroll !important; /* Forces horizontal scroll visibility */
+    position: relative; /* Helps with visibility */
   }
 
   .scrollbar-custom::-webkit-scrollbar {
     height: 6px; /* Slightly smaller scrollbar for mobile */
+    display: block !important; /* Forces scrollbar to show */
   }
 
   .scrollbar-custom::-webkit-scrollbar-thumb {
