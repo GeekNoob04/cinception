@@ -87,7 +87,7 @@
   font-weight: 500;
   font-style: normal;
   letter-spacing: 0.5px;
-  text-transform: lowercase;
+  text-transform: none;
   color: #f31e1e;
   text-shadow: 1px 1px 4px rgba(230, 57, 70, 0.5);
 }
