@@ -18,7 +18,7 @@ const Browse = () => {
   useTopRatedSeries();
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       {showGptSearch ? (
         <GptSearch />
       ) : (

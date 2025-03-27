@@ -103,7 +103,7 @@ const Login = () => {
 
   return (
     <div className="relative min-h-screen">
-      <Header />
+      {/* <Header /> */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <img
