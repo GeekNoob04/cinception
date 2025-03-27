@@ -14,10 +14,10 @@ const VideoTitle = ({ title, overview }) => {
     >
       {/* Desktop Title and Overview - Visible only on md and larger screens */}
       <div className="hidden md:block">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-wide leading-tight drop-shadow-lg">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl tracking-wide leading-tight drop-shadow-lg cinzel">
           {title}
         </h1>
-        <p className="mt-4 md:mt-6 py-3 md:py-4 text-lg md:text-xl w-full md:w-3/5 lg:w-2/5 leading-relaxed text-gray-200/80">
+        <p className="mt-2 md:mt-1 py-3 md:py-4 text-lg md:text-xl w-full md:w-3/5 lg:w-2/5 leading-relaxed text-gray-200/80">
           {overview}
         </p>
         <div className="flex flex-wrap mt-6">

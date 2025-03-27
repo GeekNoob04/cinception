@@ -53,3 +53,47 @@
     background: linear-gradient(45deg, #ff4e50, #f9d423);
   }
 }
+
+.jacquard-24-regular {
+  font-family: "Jacquard 24", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+.bungee-tint-regular {
+  font-family: "Bungee Tint", sans-serif;
+  font-weight: 300; /* Lighter weight for a classier feel */
+  font-style: normal;
+  font-size: 2.2rem; /* Slightly smaller for a refined look */
+  letter-spacing: 1.5px; /* Balanced spacing */
+  text-transform: capitalize; /* More natural look */
+  text-shadow: 2px 2px 4px rgba(255, 50, 50, 0.5); /* Subtle red glow */
+  color: #ff4d4d; /* Softer red for elegance */
+  background: linear-gradient(90deg, #ff6a6a, #ff3b3b); /* Smooth gradient */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; /* Keeps the gradient effect */
+  padding: 5px 15px; /* Adds spacing without being too bold */
+  display: inline-block; /* Keeps formatting intact */
+}
+
+.oleo-script-regular {
+  font-family: "Oleo Script", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.cinzel {
+  font-family: "Cinzel", serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  letter-spacing: 0.5px;
+  text-transform: none;
+  color: #f31e1e;
+  text-shadow: 1px 1px 4px rgba(230, 57, 70, 0.5);
+}
+
+.lobster-two-regular {
+  font-family: "Lobster Two", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
