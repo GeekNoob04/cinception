@@ -18,4 +18,4 @@ export const BG_URL =
 
 export const GEMINI_KEY = import.meta.env.VITE_GEMINI_KEY;
 
-export const OMDB_API_KEY = import.meta.env.VITE_OMDB_API_KEY;
+export const OMDB_API_KEY = "80051830";
