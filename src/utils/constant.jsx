@@ -1,5 +1,4 @@
 export const LOGO =
-  // "https://fontmeme.com/permalink/250323/fc8a5e7dc5dc7a33f35df93ee0ac8850.png";
   "https://fontmeme.com/permalink/250323/0d1731b7e71e9e482a2babcf857d6171.png";
 
 export const USER_AVATAR =
@@ -18,3 +17,5 @@ export const BG_URL =
   "https://assets.nflxext.com/ffe/siteui/vlv3/f6e7f6df-6973-46ef-b98f-12560d2b3c69/web/IN-en-20250317-TRIFECTA-perspective_26f87873-6014-460d-a6fb-1d96d85ffe5f_large.jpg";
 
 export const GEMINI_KEY = import.meta.env.VITE_GEMINI_KEY;
+
+export const OMDB_API_KEY = import.meta.env.VITE_OMDB_API_KEY;
