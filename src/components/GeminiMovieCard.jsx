@@ -76,7 +76,7 @@ const MovieDetails = React.memo(
         {(displayData?.first_air_date || displayData?.name) && (
           <button
             onClick={handleShowEpisodeRatings}
-            className="bg-blue-600 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-md text-xs sm:text-sm hover:bg-blue-700 transition-colors flex items-center"
+            className="bg-blue-600 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-md text-xs sm:text-sm hover:bg-blue-700 transition-colors flex items-center cursor-pointer"
           >
             <RiBarChartFill className="mr-1 sm:mr-2" /> Episode Ratings
           </button>

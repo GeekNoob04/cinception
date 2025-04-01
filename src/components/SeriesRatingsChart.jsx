@@ -290,7 +290,7 @@ const SeriesRatingsChart = ({
           <div className="fixed bottom-0 left-0 right-0 mt-8 bg-neutral-900 py-3 sm:py-4 px-4 border-t border-gray-800 z-10">
             <button
               onClick={onClose}
-              className="w-full bg-red-600 hover:bg-red-700 text-white py-2 sm:py-2.5 rounded-lg transition-colors flex items-center justify-center text-sm sm:text-base font-medium shadow-md"
+              className="w-full bg-red-600 hover:bg-red-700 text-white py-2 sm:py-2.5 rounded-lg transition-colors flex items-center justify-center text-sm sm:text-base font-medium shadow-md cursor-pointer"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
