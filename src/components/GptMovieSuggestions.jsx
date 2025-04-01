@@ -10,7 +10,7 @@ const GptMovieSuggestions = () => {
   return (
     <div className="mt-12 px-4 py-6 backdrop-blur-sm bg-black/60 rounded-xl shadow-xl">
       <MovieList
-        title="Recommended Movies"
+        title="Recommended Movies And Series"
         movies={movieResults || []}
         isLoading={isLoading}
       />
