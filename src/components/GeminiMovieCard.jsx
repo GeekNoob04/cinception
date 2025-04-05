@@ -275,7 +275,7 @@ const GeminiMovieCard = ({ movie }) => {
       <button
         className="absolute top-1 right-1 p-1.5 rounded-full bg-white bg-opacity-20 backdrop-blur-lg shadow-lg 
         hover:bg-opacity-40 active:scale-90
-        transition-all duration-300 ease-in-out"
+        transition-all duration-300 ease-in-out cursor-pointer"
         onClick={handleFavoriteToggle}
         aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
       >
