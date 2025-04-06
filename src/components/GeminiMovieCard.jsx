@@ -227,13 +227,13 @@ const GeminiMovieCard = ({ movie }) => {
   const isTvSeries = movie?.first_air_date || movie?.name;
 
   return (
-    <div className="relative w-28 xs:w-32 sm:w-40 md:w-44 lg:w-56 flex-shrink-0 mb-4 transform transition-all duration-300 hover:scale-105">
+    <div className="relative w-28 xs:w-32 sm:w-40 md:w-44 lg:w-56 flex-shrink-0 mb-4">
       <div className="w-full overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
         <div className="relative">
           <img
             src={IMG_CDN_URL + posterPath}
             alt={movie?.title || "Movie Card"}
-            className="w-full h-40 xs:h-48 sm:h-52 md:h-64 lg:h-80 object-cover cursor-pointer"
+            className="w-full h-40 xs:h-48 sm:h-52 md:h-64 lg:h-80 object-cover cursor-pointer hover:scale-105 transition-transform duration-300"
             onClick={handleShowInfo}
             loading="lazy"
             draggable="false"
@@ -275,7 +275,7 @@ const GeminiMovieCard = ({ movie }) => {
       <button
         className="absolute top-1 right-1 p-1.5 rounded-full bg-white bg-opacity-20 backdrop-blur-lg shadow-lg 
         hover:bg-opacity-40 active:scale-90
-        transition-all duration-300 ease-in-out cursor-pointer"
+        transition-all duration-300 ease-in-out"
         onClick={handleFavoriteToggle}
         aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
       >
