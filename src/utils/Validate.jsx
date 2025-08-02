@@ -7,13 +7,8 @@ export const checkValidDAta = (name, email, password) => {
 
     // Password validation
     if (!password) return "Password Is Required";
-
     if (password.length < 8) {
         return "Password Must Be At Least 8 Characters Long";
-    }
-
-    if (!/\d/.test(password)) {
-        return "Password Must Contain At Least One Number";
     }
 
     // Name validation (only when signing up)
