@@ -126,7 +126,9 @@ This project is a React-based web application designed to provide users with an 
 ## 📸 Screenshots
 
 <img width="1439" height="790" alt="Screenshot 2025-08-03 at 11 04 20 AM" src="https://github.com/user-attachments/assets/0d3d96cb-e72e-4058-8d20-a85b714504d5" />
+
 <img width="1419" height="781" alt="Screenshot 2025-08-03 at 11 05 18 AM" src="https://github.com/user-attachments/assets/bd3d3bf6-d2a1-473a-9890-6c5363d94de6" />
+
 <img width="1426" height="779" alt="Screenshot 2025-08-03 at 11 08 20 AM" src="https://github.com/user-attachments/assets/1de45679-d5d5-4152-9446-bb8c795a5db6" />
 
 
