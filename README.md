@@ -46,7 +46,7 @@ This project is a React-based web application designed to provide users with an 
 1.  Clone the repository:
 
     ```bash
-    git clone <repository_url>
+    git clone https://github.com/GeekNoob04/cinception
     cd <project_directory>
     ```
 
